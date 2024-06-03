@@ -1,0 +1,31 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Karl ST Trial";
+  src:
+    url("./KarlSTTrial-Regular.woff2") format("woff2"),
+    url("./KarlSTTrial-Regular.woff2") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+	--trustblau: #2DABFF;
+	--camo: #81842F;
+	--upsgray: #CBCFCB;
+}
+
+html,
+body {
+	background: #fff;
+	height: 100%;
+	font-family: 'Karl ST Trial'
+}
+
+img {
+	max-width: 100%;
+}
