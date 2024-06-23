@@ -4,8 +4,9 @@ export function render (context: CanvasRenderingContext2D, scenario: boolean[][]
 	console.log('context', context)
 	console.log('********************')
 
-	const w = 100 //scenario.length
-	const h = 100 //scenario[0].length
+	// Todo: Make consistent with resolution
+	const w = 100
+	const h = 100
 	
 	for (let i = 0; i <= w; i++) {
 		for (let j = 0; j <= h; j++) {
@@ -21,8 +22,14 @@ function drawDot (context: CanvasRenderingContext2D, [x, y], fill: boolean) {
 	context.arc(x, y, 24, 0, Math.PI * 2)
 	context.stroke()
 
-	context.fillStyle = '#2DABFF'
+	//context.fillStyle = '#2DABFF'
 	//context.fillStyle = '#000'
+	//context.fillStyle = '#ffaed7'
+	context.arc(x, y, 50, 0, Math.PI * 2)
+
+	// Camouflage range?
+	// Prevent overlay - draw as new layer after stroke
+	context.fillStyle = `rgba(99, 255, 152, ${rand(0.8, 1)})`
 
 	if (fill) {
 		context.fill()
