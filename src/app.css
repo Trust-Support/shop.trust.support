@@ -7,8 +7,8 @@
 @font-face {
   font-family: "Karl ST Trial";
   src:
-    url("./KarlSTTrial-Regular.woff2") format("woff2"),
-    url("./KarlSTTrial-Regular.woff2") format("woff");
+    url("/KarlSTTrial-Regular.woff2") format("woff2"),
+    url("/KarlSTTrial-Regular.woff2") format("woff");
   font-weight: normal;
   font-style: normal;
 }
