@@ -19,14 +19,14 @@
 		const scenario = []
 
 		render(context, scenario)
-		/*let interval = setInterval(() => {
+		let interval = setInterval(() => {
 			context.clearRect(0, 0, width * pixelRatio, height * pixelRatio)
 			render(context, scenario)
-		}, 1000)*/
+		}, 5000)
 
 		return () => {
-			//context = null
-			//interval = null
+			context = null
+			interval = null
 		}
 	}
 
