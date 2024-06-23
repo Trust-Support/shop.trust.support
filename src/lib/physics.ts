@@ -29,7 +29,7 @@ function drawDot (context: CanvasRenderingContext2D, [x, y], fill: boolean) {
 
 	// Camouflage range?
 	// Prevent overlay - draw as new layer after stroke
-	context.fillStyle = `rgba(99, 255, 152, ${rand(0.95, 1)})`
+	context.fillStyle = `rgba(99, 255, 152, ${rand(0.90, 1)})`
 
 	if (fill) {
 		context.fill()
