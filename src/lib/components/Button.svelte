@@ -1,42 +1,81 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte'
+
+	const dispatch = createEventDispatcher()
+
 	export let disabled: boolean
+	export let action: 'toggle' | 'submit' = 'toggle'
 </script>
 
-<button {disabled}>
+<button
+	on:click={(e) => {
+		dispatch('push', e)
+	}}
+	disabled={false}
+	class="button"
+	class:button--toggle={action == 'toggle'}
+	class:button--submit={action == 'submit'}
+	>
 	<slot/>
 </button>
 
 <style>
-	button {
-		border-radius: 1px;
+	.button {
 		box-shadow: none;
 		border: none;
-		padding: 0.5rem 1rem;
-		color: var(--upsgray);
-		background: var(--trustblau);
 		font-weight: 600;
 		font-size: 1rem;
 		text-align: center;
 		cursor: pointer;
-		/* Better transition */
-		transition: color background 0.5s linear;
+		font-weight: normal;
+		transition: box-shadow linear 0.15s;
 	}
 
-	button[disabled] {
+	.button--toggle {
+		background: var(--upsgray);
+		box-shadow: inset 0 0 5px var(--upsgray-inv-30);
+		color: var(--upsgray-inv);
+		border-radius: 1px;
+		padding: 1.75rem 2rem;
+	}
+
+	.button--submit {
+		border-radius: 0px;
+		background: var(--trustblau);
+		color: var(--upsgray-inv);
+		box-shadow: inset 0 0 5px var(--upsgray-inv-30);
+		padding: 0.5rem 2rem;
+		width: 100%;
+	}
+
+	.button[disabled] {
 		background: #fff;
 		cursor: not-allowed;
 	}
 
-	button:not([disabled]):hover {
+	.button--toggle:not([disabled]):hover {
+		box-shadow: inset 0 0 0.25px var(--upsgray-30);
+	}
+
+	.button--submit:not([disabled]):hover {
+		box-shadow: inset 0 0 0.25px var(--upsgray-inv-30);
+	}
+
+	/*
+	.button--highlighted {
+		box-shadow: inset 0 0 15px #0075c4;
+		background: var(--trustblau);
+		transition: box-shadow 0.5s linear;
+		border-radius: 4px;
+	}	
+
+	.button--submit.highlighted:not([disabled]):hover {
 		background: var(--trustblau);
 	}
 
-	button.highlight {
-		background: var(--trustblau);
-	}
+	.button--submit-highlighted { }
 
-	button.highlight:not([disabled]):hover {
-		/* Glare anim? */
-		/* Glow anim? */
-	}
+	.button--submit-highlighted:not([disabled]):hover { }
+	*/
 </style>
+

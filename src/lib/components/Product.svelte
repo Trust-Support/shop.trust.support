@@ -1,31 +1,46 @@
 <script lang="ts">
-	export let images: [] | string[] = []
+	import { intersect } from 'svelte-intersection-observer-action'
+	import Image from '$lib/components/Image.svelte'
+	import { selectedProduct, selectedProductId, selectedVariantId  } from '../../store'
+
+	export let id: string;
+	export let images: string[];
+
+	const intersectCallback = (e) => {
+		if (e.intersectionRatio > 0.5) {
+			$selectedProductId = e.target.id
+			$selectedVariantId = $selectedProduct?.variants[0].id
+		}
+	}
+
+	const intersectOptions = {
+		callback: intersectCallback,
+		rootMargin: "0px 0px 0px 0px",
+		threshold: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+	}
 </script>
 
-<div class="product">
-	<!-- Preload SVG outlines -->
+<div
+	class="product"
+	id={id}
+	use:intersect={intersectOptions}>
 	{#each images as image}
-		<img class="product__image" srcset="" src={image}/>
+		<Image
+			class="product__image"
+			src={image} />
 	{/each}
 </div>
 
-<!--<Range on:change={(e) => value = e.detail.value} id="basic-slider" max="{230}" min="{5}" initialValue="{value}"/>-->
-
 <style>
 	.product {
-		grid-column: span 2;
 		display: flex;
+		padding: 0.1rem;
 		align-self: start;
 		flex-flow: column wrap;
 		background: #fff;
 	}
 
-	.product__image {
-		display: block;
-		flex: 1;
-		width: 100%;
-	}
-
+	/* Grid on mobile? */
 	@media (max-width: 1024px) {
 		.product {
 			width: 100%;
@@ -36,3 +51,4 @@
 		}
 	}
 </style>
+

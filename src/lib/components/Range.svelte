@@ -1,14 +1,17 @@
-<script>
-  import { createEventDispatcher, onMount } from "svelte";
-  import { fly, fade } from "svelte/transition";
+<script lang='ts'>
+  import { createEventDispatcher, onMount } from 'svelte';
+  import { browser } from '$app/environment';
+  import { fly, fade } from 'svelte/transition';
 
   // Props
-  export let min = 0;
-  export let max = 100;
-  export let initialValue = 0;
+  //export let values: [];
+  export let initialValue: number = 0;
   export let id = null;
-  export let value =
-	typeof initialValue === "string" ? parseInt(initialValue) : initialValue;
+
+	export let min: number = 0
+	export let max: number = 100 //values?.length - 1
+
+  export let value = typeof initialValue === 'string' ? parseInt(initialValue) : initialValue;
 
   // Node Bindings
   let container = null;
@@ -23,27 +26,37 @@
   let thumbHover = false;
   let keydownAcceleration = 0;
   let accelerationTimer = null;
+  let mouseEventShield;
 
   // Dispatch 'change' events
   const dispatch = createEventDispatcher();
 
-  // Mouse shield used onMouseDown to prevent any mouse events penetrating other elements,
-  // ie. hover events on other elements while dragging. Especially for Safari
-  const mouseEventShield = document.createElement("div");
-  mouseEventShield.setAttribute("class", "mouse-over-shield");
-  mouseEventShield.addEventListener("mouseover", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  onMount(() => {
+    if (browser) {
+      // Mouse shield used onMouseDown to prevent any mouse events penetrating other elements,
+      // ie. hover events on other elements while dragging. Especially for Safari
+      mouseEventShield = document.createElement('div');
+      mouseEventShield.setAttribute('class', 'mouse-over-shield');
+      mouseEventShield.addEventListener('mouseover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      resizeWindow();
+      window.addEventListener('resize', resizeWindow);
+    }
   });
 
   function resizeWindow() {
-    elementX = element.getBoundingClientRect().left;
+    if (element) {
+      elementX = element.getBoundingClientRect().left;
+    }
   }
 
   // Allows both bind:value and on:change for parent value retrieval
   function setValue(val) {
     value = val;
-    dispatch("change", { value });
+    dispatch('change', { value });
   }
 
   function onTrackEvent(e) {
@@ -58,13 +71,13 @@
 
   function onDragStart(e) {
     // If mouse event add a pointer events shield
-    if (e.type === "mousedown") document.body.append(mouseEventShield);
+    if (e.type === 'mousedown' && browser) document.body.append(mouseEventShield);
     currentThumb = thumb;
   }
 
   function onDragEnd(e) {
     // If using mouse - remove pointer event shield
-    if (e.type === "mouseup") {
+    if (e.type === 'mouseup' && browser) {
       if (document.body.contains(mouseEventShield))
         document.body.removeChild(mouseEventShield);
       // Needed to check whether thumb and mouse overlap after shield removed
@@ -75,6 +88,7 @@
 
   // Check if mouse event cords overlay with an element's area
   function isMouseInElement(event, element) {
+    if (!browser) return false;
     let rect = element.getBoundingClientRect();
     let { clientX: x, clientY: y } = event;
     if (x < rect.left || x >= rect.right) return false;
@@ -89,14 +103,14 @@
     if (keydownAcceleration < 50) keydownAcceleration++;
     let throttled = Math.ceil(keydownAcceleration / 5);
 
-    if (e.key === "ArrowUp" || e.key === "ArrowRight") {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
       if (value + throttled > max || value >= max) {
         setValue(max);
       } else {
         setValue(value + throttled);
       }
     }
-    if (e.key === "ArrowDown" || e.key === "ArrowLeft") {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
       if (value - throttled < min || value <= min) {
         setValue(min);
       } else {
@@ -126,7 +140,7 @@
   // Handles both dragging of touch/mouse as well as simple one-off click/touches
   function updateValueOnEvent(e) {
     // touchstart && mousedown are one-off updates, otherwise expect a currentPointer node
-    if (!currentThumb && e.type !== "touchstart" && e.type !== "mousedown")
+    if (!currentThumb && e.type !== 'touchstart' && e.type !== 'mousedown')
       return false;
 
     if (e.stopPropagation) e.stopPropagation();
@@ -134,7 +148,7 @@
 
     // Get client's x cord either touch or mouse
     const clientX =
-      e.type === "touchmove" || e.type === "touchstart"
+      e.type === 'touchmove' || e.type === 'touchstart'
         ? e.touches[0].clientX
         : e.clientX;
 
@@ -142,13 +156,13 @@
   }
 
   // React to left position of element relative to window
-  $: if (element) elementX = element.getBoundingClientRect().left;
+  $: if (element && browser) elementX = element.getBoundingClientRect().left;
 
   // Set a class based on if dragging
   $: holding = Boolean(currentThumb);
 
   // Update progressbar and thumb styles to represent value
-  $: if (progressBar && thumb) {
+  $: if (progressBar && thumb && container) {
     // Limit value min -> max
     value = value > min ? value : min;
     value = value < max ? value : max;
@@ -168,7 +182,6 @@
   on:touchend={onDragEnd}
   on:mousemove={updateValueOnEvent}
   on:mouseup={onDragEnd}
-  on:resize={resizeWindow}
 />
 <div class="range">
   <div
@@ -195,34 +208,10 @@
         on:mouseover={() => (thumbHover = true)}
         on:mouseout={() => (thumbHover = false)}
       >
-        {#if holding || thumbHover}
-          <div
-            class="range__tooltip"
-            in:fly={{ y: 7, duration: 200 }}
-            out:fade={{ duration: 100 }}
-          >
-            {value}
-          </div>
-        {/if}
-      </div>
+     </div>
     </div>
   </div>
 </div>
-
-<svelte:head>
-  <style>
-    .mouse-over-shield {
-      position: fixed;
-      top: 0px;
-      left: 0px;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(255, 0, 0, 0);
-      z-index: 10000;
-      cursor: grabbing;
-    }
-  </style>
-</svelte:head>
 
 <style>
   .range {
@@ -239,22 +228,18 @@
   }
 
   .range__wrapper:focus-visible > .range__track {
-    box-shadow: 0 0 0 2px white, 0 0 0 3px var(--track-focus, #6185ff);
+    box-shadow: 0 0 0 2px white, 0 0 0 3px var(--upsgray);
   }
 
   .range__track {
     height: 6px;
-    background-color: var(--track-bgcolor, #d0d0d0);
+    background-color: var(--upsgray);
     border-radius: 999px;
+		cursor: pointer;
   }
 
   .range__track--highlighted {
-    background-color: var(--track-highlight-bgcolor, #6185ff);
-    background: var(
-      --track-highlight-bg,
-      linear-gradient(90deg, #6185ff, #9c65ff)
-    );
-    width: 0;
+		width: 0;
     height: 6px;
     position: absolute;
     border-radius: 999px;
@@ -267,50 +252,27 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background-color: var(--thumb-bgcolor, white);
-    cursor: pointer;
+    background-color: var(--upsgray);
+    cursor: grab;
     border-radius: 999px;
     margin-top: -8px;
     transition: box-shadow 100ms;
     user-select: none;
-    box-shadow: var(
-      --thumb-boxshadow,
-      0 1px 1px 0 rgba(0, 0, 0, 0.14),
-      0 0px 2px 1px rgba(0, 0, 0, 0.2)
-    );
-  }
+    box-shadow: 0 0 5px var(--upsgray-inv-30);
+	}
 
-  .range__thumb--holding {
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
-      0 1px 2px 1px rgba(0, 0, 0, 0.2),
-      0 0 0 6px var(--thumb-holding-outline, rgba(113, 119, 250, 0.3));
-  }
+	.range__thumb--holding {
+    box-shadow: 0 0 0.25px var(--upsgray-inv-30);
+	}
 
-  .range__tooltip {
-    pointer-events: none;
-    position: absolute;
-    top: -33px;
-    color: var(--tooltip-text, white);
-    width: 38px;
-    padding: 4px 0;
-    border-radius: 4px;
-    text-align: center;
-    background-color: var(--tooltip-bgcolor, #6185ff);
-    background: var(--tooltip-bg, linear-gradient(45deg, #6185ff, #9c65ff));
-  }
-
-  .range__tooltip::after {
-    content: "";
-    display: block;
-    position: absolute;
-    height: 7px;
-    width: 7px;
-    background-color: var(--tooltip-bgcolor, #6185ff);
-    bottom: -3px;
-    left: calc(50% - 3px);
-    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-    transform: rotate(-45deg);
-    border-radius: 0 0 0 3px;
+  :global(.mouse-over-shield) {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0);
+    z-index: 10000;
+    cursor: grabbing;
   }
 </style>
-

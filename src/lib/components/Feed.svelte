@@ -1,0 +1,17 @@
+<script lang="ts">
+	import Product from '$lib/components/Product.svelte'
+	import { products } from '../../store'
+</script>
+
+<div class="feed">
+	{#each $products as { id, images }}
+		<Product {id} {images} />
+	{/each}
+</div>
+
+<style>
+	.feed {
+		flex: 0.5;
+	}
+</style>
+

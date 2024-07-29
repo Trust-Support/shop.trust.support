@@ -5,26 +5,34 @@
 }
 
 @font-face {
-  font-family: "Karl ST Trial";
-  src:
-    url("/KarlSTTrial-Regular.woff2") format("woff2"),
-    url("/KarlSTTrial-Regular.woff2") format("woff");
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Karl ST Trial';
+	src:
+		url('/KarlSTTrial-Regular.woff2') format('woff2'),
+		url('/KarlSTTrial-Regular.woff2') format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 :root {
-	--trustblau: #2DABFF;
-	--camo: #81842F;
-	--upsgray: #CBCFCB;
-	--acidgreen: #EEF43C;
+	--trustblau: #2dabff;
+	--trustblau-sunbleached: #2dabff50;
+	--trustblau-inv: #d25400;
+	--camo: #81842f;
+	--upsgray: #cbcfcb;
+	--upsgray-30: #cbcfcb30;
+	--upsgray-inv: #343034;
+	--upsgray-inv-30: #34303430;
+	--acidgreen: #eef43c;
+
+	--space-row: 0.75rem;
+	--space-section: 1rem;
 }
 
 html,
 body {
 	background: #fff;
 	height: 100%;
-	font-family: 'Karl ST Trial'
+	font-family: 'Karl ST Trial';
 }
 
 img {
