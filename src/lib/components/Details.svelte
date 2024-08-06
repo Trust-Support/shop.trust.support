@@ -8,12 +8,23 @@
 
 	let contentEl
 
+	// Throttle
 	const setRects = () => {
-		$contentRects = [...Object.values(contentEl.children).map((el) => el.getBoundingClientRect())]
+		const newContentRects = [...Object.values(contentEl.children).map((el) => el.getBoundingClientRect())]
 
-		console.log('********************')
-		console.log($contentRects)
-		console.log('********************')
+    const contentRectsUpdated = newContentRects.some((rect, i) => {
+      const newRect = $contentRects[i]
+
+      return !newRect ||
+        rect.top !== newRect.top ||
+        rect.left !== newRect.left ||
+        rect.width !== newRect.width ||
+        rect.height !== newRect.height
+    })
+
+    if (contentRectsUpdated) {
+      $contentRects = newContentRects
+    }
 	}
 
 	onMount(setRects)
@@ -51,7 +62,7 @@
 
 <style>
 	.details {
-		flex: 0.5;
+		flex: 0.55;
 		display: flex;
 		flex-direction: column;
 		position: sticky;
@@ -64,13 +75,12 @@
 	.details__content {
 		display: flex;
 		flex-direction: column;
-		border-left: 1px solid var(--trustblau);
 		flex: 1;
 		/* Fork with no padding and set witdth */
-		padding: 2.5rem;
+		padding: 6rem 4.5rem 4.5rem 4.5rem;
 		justify-content: start;
 		align-items: center;
-		opacity: 1;
+		/*opacity: 0;*/
 	}
 
 	:global(.details__content--muted *) {
@@ -83,6 +93,7 @@
 		width: 100%;
 		height: 100%;
 		z-index: -1;
+		border-left: 1px solid var(--trustblau);
 	}
 
 	.details__footer {

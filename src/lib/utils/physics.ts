@@ -18,7 +18,6 @@ export default class Physics {
 	}
 
 	erase (negSpaces: DOMRect[], radius: number, count: number = 3) {
-		let i = 0
 
 		// Translate to the center of the rectangle
 		//this.context.save();
@@ -26,7 +25,7 @@ export default class Physics {
 		while (i <= count) {
 			i += 1
 
-			for (const { top, right, bottom, left, width, height } of negSpaces) {
+			for (const { top, left, width, height } of negSpaces) {
 				for (let i = 0; i <= 5; i++) {
 					//this.context.rotate(shift(-1, 0, 1) * Math.PI / 180)
 

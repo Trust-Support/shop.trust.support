@@ -32,6 +32,7 @@
 	"type": "module",
 	"dependencies": {
 		"@shopify/shopify-api": "^11.0.0",
-		"svelte-intersection-observer-action": "^0.0.5"
+		"svelte-intersection-observer-action": "^0.0.5",
+		"svelte-media-queries": "^1.6.2"
 	}
 }

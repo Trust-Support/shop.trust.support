@@ -125,6 +125,7 @@
 	ul {
 		list-style: none;
 		display: flex;
+		flex-flow: row wrap;
 		gap: var(--space-row);
 	}
 </style>

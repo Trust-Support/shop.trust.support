@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { scale } from 'svelte/transition';
+	import { quadIn } from 'svelte/easing';
 	import { cart, isCartLoading } from '../../store'
 	import Button from '$lib/components/Button.svelte'
 
@@ -13,7 +15,6 @@
 
 <!-- Fade in? -->
 <div class="cart">
-	{#if 1}
 	<div class="cart__row">
 			<table class="cart__table">
 				<!--{#each cart as {id, title, variant, cost, quantity}}
@@ -26,45 +27,55 @@
 				{/each}-->
 				<!-- make scrollable when too long -->
 					<tr>
-						<a>
-							<td>2x T-shirt XL</td>
-							<td>35€</td>
-						</a>
+						<td>2x T-shirt XL</td>
+						<td>35€</td>
+						<td>
+							<Button action="remove">X</Button>
+						</td>
 					</tr>
 
 					<tr>
-						<a>
-							<td>1x T-shirt L</td>
-							<td>40€</td>
-						</a>
+						<td>1x T-shirt L</td>
+						<td>40€</td>
+						<td>
+							<Button action="remove">X</Button>
+						</td>
 					</tr>
 
 					<tr>
-						<a>
-							<td>1x Lanyard</td>
-							<td>free</td>
-						</a>
+						<td>1x Lanyard</td>
+						<td>free</td>
+						<td>
+							<Button action="remove">X</Button>
+						</td>
 					</tr>
+
+					<tfoot>
+						<tr>
+							<td>Total</td>
+							<!-- if 0 free -->
+							<td>75€</td>
+							<td></td>
+						</tr>
+					<tfoot>
 			</table>
 		</div>
 
-		<Button
-			action="submit"
+		<Button action="submit"
 			on:message={checkout}
 			>
 			Checkout
 		</Button>
-	{:else}
+	<!--{:else}
 		<div class="cart__row">
 			<p>Cart empty</p>
-		</div>
-	{/if}
+		</div>-->
 </div>
 
 <style>
 	.cart {
 		/*margin-top: var(--space-section);*/
-		margin-top: 2rem;
+		margin-top: 4.5rem;
 		background: #fff;
 		align-self: stretch;
 	}
@@ -75,6 +86,12 @@
 
 	.cart__table {
 		border-collapse: collapse;
+    table-layout : fixed;
+		width: 100%;
+	}
+
+	.cart__table tr td:last-child {
+		width: 5rem;
 	}
 </style>
 

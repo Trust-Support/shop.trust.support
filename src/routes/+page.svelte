@@ -1,4 +1,5 @@
 <script lang="ts">
+	import MediaQuery from 'svelte-media-queries'
 	import Feed from '$lib/components/Feed.svelte'
 	import Details from '$lib/components/Details.svelte'
 	import { products, selectedProductId, selectedProduct, selectedVariantId } from '../store'
@@ -8,11 +9,22 @@
 
 	$selectedProductId = $products[0].id
 	$selectedVariantId = $products[0].variants[0].id
+
+	let isMobile
 </script>
 
+<MediaQuery query='(max-width: 1024px)' bind:isMobile/>
+
 <main class="content">
-	<Feed/>
-	<Details/>
+	{#if isMobile}
+		{#each $products as $product}
+			<Feed product={$product}/>
+			<Details product={$product}/>
+		{/each}
+	{:else}
+		<Feed/>
+		<Details/>
+	{/if}
 </main>
 
 <style>

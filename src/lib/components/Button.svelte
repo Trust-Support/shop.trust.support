@@ -3,18 +3,23 @@
 
 	const dispatch = createEventDispatcher()
 
+	// By variant ID
 	export let disabled: boolean
-	export let action: 'toggle' | 'submit' = 'toggle'
+	export let on: boolean = false
+	export let action: 'toggle' | 'submit' | 'remove' = 'toggle'
 </script>
 
 <button
 	on:click={(e) => {
 		dispatch('push', e)
+		on = !on
 	}}
 	disabled={false}
 	class="button"
 	class:button--toggle={action == 'toggle'}
+	class:button--toggle--on={on}
 	class:button--submit={action == 'submit'}
+	class:button--remove={action == 'remove'}
 	>
 	<slot/>
 </button>
@@ -39,12 +44,23 @@
 		padding: 1.75rem 2rem;
 	}
 
+	.button--toggle--on {
+		background: var(--trustblau);
+	}
+
 	.button--submit {
 		border-radius: 0px;
 		background: var(--trustblau);
 		color: var(--upsgray-inv);
 		box-shadow: inset 0 0 5px var(--upsgray-inv-30);
 		padding: 0.5rem 2rem;
+		width: 100%;
+	}
+
+	.button--remove {
+		border-radius: 0px;
+		background: #ffffff00;
+		color: var(--upsgray-inv);
 		width: 100%;
 	}
 

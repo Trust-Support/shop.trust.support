@@ -11,7 +11,7 @@
 
 <style>
 	.feed {
-		flex: 0.5;
+		flex: 0.45;
 	}
 </style>
 

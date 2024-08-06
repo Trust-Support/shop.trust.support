@@ -38,6 +38,7 @@
 		align-self: start;
 		flex-flow: column wrap;
 		background: #fff;
+		min-height: 45vh;
 	}
 
 	/* Grid on mobile? */

@@ -14,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>Trust store</title>
+	<title>Store</title>
 </svelte:head>
 
 <main class="content">
