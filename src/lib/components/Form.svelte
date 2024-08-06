@@ -43,6 +43,14 @@
 		// Loading state = mute ui
 		$isCartLoading = false
 	}
+
+	const selectVariant = (variantId: string) => {
+		console.log('********************')
+		console.log(`Selecting variant: ${variantId}.`)
+		console.log('********************')
+
+		$selectedVariantId = variantId
+	}
 </script>
 
 <div class="form">
@@ -53,7 +61,11 @@
 				{#each $selectedProduct?.variants as { id, title, availableForSale }}
 					<li>
 						<Button
-							on:push={addToCart}>
+							on:push={() => {
+								selectVariant(id)
+							}}
+							toggled={$selectedVariantId == id}
+							>
 							{title}
 						</Button>
 					</li>

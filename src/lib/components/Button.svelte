@@ -5,19 +5,18 @@
 
 	// By variant ID
 	export let disabled: boolean
-	export let on: boolean = false
+	export let toggled: boolean = false
 	export let action: 'toggle' | 'submit' | 'remove' = 'toggle'
 </script>
 
 <button
 	on:click={(e) => {
 		dispatch('push', e)
-		on = !on
 	}}
 	disabled={false}
 	class="button"
 	class:button--toggle={action == 'toggle'}
-	class:button--toggle--on={on}
+	class:button--toggle--on={toggled}
 	class:button--submit={action == 'submit'}
 	class:button--remove={action == 'remove'}
 	>
