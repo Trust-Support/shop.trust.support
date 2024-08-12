@@ -15,27 +15,36 @@ export const selectedVariantId = writable('')
 
 export const selectedProduct = derived(
 		[products, selectedProductId],
-		([$products, $selectedProductId]) =>
-			$products.filter(({ id }) => id == $selectedProductId)[0])
+		([$products, $selectedProductId]) => {
+			console.log('********************')
+			console.log($products)
+			console.log($selectedProductId)
+			console.log('********************')
+			return $products.filter(({ _id }) => _id == $selectedProductId)[0]
+		})
 
-export const selectedVariant = derived(
-	[selectedProduct, selectedVariantId],
-	([$selectedProduct, $selectedVariantId]) =>
-		$selectedProduct.variants.filter(({ id }) =>
-			id == $selectedVariantId)[0])
+export const selectedVariant = writable('0')
+
+//export const selectedVariant = derived(
+//	[selectedProduct, selectedVariantId],
+//	([$selectedProduct, $selectedVariantId]) =>
+//		$selectedProduct.variants.filter(({ id }) =>
+//			id == $selectedVariantId)[0])
 
 /********************/
 /* Session          */
 /********************/
 export const isCartLoading = writable(false)
 
-export const cartId = writable(
-	(browser && localStorage.getItem('cartId')) ||
-	undefined
-)
+//export const cartId = writable(
+//	(browser && localStorage.getItem('cartId')) ||
+//	undefined
+//)
 
-cartId.subscribe((val) => 
-	browser && localStorage.setItem('cartId', val)
+export const cart = writable([])
+
+cart.subscribe((val) => 
+	browser && localStorage.setItem('cart', JSON.stringify(val))
 )
 
 export const cartCreatedAt = writable(
@@ -59,17 +68,13 @@ export const isCartIdExpired = derived(cartCreatedAt, ($cartCreatedAt) => {
 	return days > 6
 })
 
-export const cart = writable({})
+export const cartTotal = derived(cart, ($cart) => $cart.reduce((sum, val) => sum += val, 0))
 
-export const checkoutUrl = derived(cart, ($cart) =>
-	$cart?.body?.data?.cartCreate?.cart?.checkoutUrl)
+export const checkoutUrl = derived(cart, ($cart) => {})
+	//$cart?.body?.data?.cartCreate?.cart?.checkoutUrl)
 
-export const cartItems = derived(cart, ($cart) =>
-	$cart.lines.edges)
-
-export const cartTotal = derived(cart, ($cart) => 
-	$cart.reduce((acc, { price }) =>
-		acc + price, 0))
+//export const cartItems = derived(cart, ($cart) =>
+//	$cart.lines.edges)
 
 /********************/
 /* Layout           */

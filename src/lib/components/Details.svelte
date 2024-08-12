@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import Matrix from '$lib/components/Matrix.svelte'
-	import Text from '$lib/components/Text.svelte'
+	import Block from '$lib/components/Block.svelte'
+	import Row from '$lib/components/Row.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import Cart from '$lib/components/Cart.svelte'
 	import { isCartLoading, selectedProduct, selectedProductId, contentRects } from '../../store'
@@ -45,9 +46,17 @@
 		class="details__content"
 		class:details__content--muted={$isCartLoading}
 		>
-		<Text/>	
-		<Form/>
-		<Cart/>
+		<Block>
+			<Row>
+				{@html $selectedProduct?.description}
+			</Row>
+
+			<Form/>
+		</Block>
+
+		<Block>
+			<Cart/>
+		</Block>
 	</div>
 
 	<footer class="details__footer">
@@ -78,6 +87,7 @@
 		flex: 1;
 		/* Fork with no padding and set witdth */
 		padding: 6rem 4.5rem 4.5rem 4.5rem;
+		gap: 4.5rem;
 		justify-content: start;
 		align-items: center;
 		/*opacity: 0;*/

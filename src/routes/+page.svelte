@@ -3,12 +3,13 @@
 	import Feed from '$lib/components/Feed.svelte'
 	import Details from '$lib/components/Details.svelte'
 	import { products, selectedProductId, selectedProduct, selectedVariantId } from '../store'
+
 	export let data
 
 	$products = data.products
 
-	$selectedProductId = $products[0].id
-	$selectedVariantId = $products[0].variants[0].id
+	// Base on observer
+	$selectedProductId = $products[0]._id
 
 	let isMobile
 </script>

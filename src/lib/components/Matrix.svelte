@@ -40,7 +40,7 @@
 
 	// Grid
 	const minBaseRadius: number = 16
-	const baseDiameterPct: number = 3 / 100
+	const baseDiameterPct: number = 4 / 100
 	let baseRadius: number 
 
 	const baseScenario = [
@@ -151,7 +151,6 @@
 		strokeStyle: string = '#2dabff', 
 		fillStyle: string = '#ffffff00',
 		radiusMultiplier: number = 1,
-		fill: boolean = true
 		) => {
 		// Set styles
 		context.strokeStyle = strokeStyle
@@ -184,9 +183,8 @@
 				// Right
 				// Bottom
 				// Left
-				if (fill) {
-					context.fill()
-				}
+
+				context.fill()
 			}
 		}
 	}
@@ -238,8 +236,9 @@
 			screenContext.clearRect(0, 0, width, height)
 			bufferContext.clearRect(0, 0, width, height)
 
+
 			// Draw adaptive grid
-			drawScenario(screenContext, [], '#2dabff50', '#63ff9899', 1, false)
+			drawScenario(screenContext, [], '#2dabff90', '#63ff9899', 1)
 
 			// Draw scenario sans content rectangles
 			drawScenario(bufferContext, overprintScenario, '#ffffff00', '#63ff9899', 1.1)
@@ -261,7 +260,11 @@
 			screenContext.drawImage(bufferCanvasEl, 0, 0)
 		}
 
-		frameLoop()
+
+		//frameLoop()
+		
+		screenContext.fillStyle = '#63ff9899'
+		screenContext.fillRect(0, 0, width, height)
 	}
 
 	onMount(() => {

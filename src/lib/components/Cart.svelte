@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { scale } from 'svelte/transition';
-	import { quadIn } from 'svelte/easing';
-	import { cart, isCartLoading } from '../../store'
+	import { cart, cartTotal, isCartLoading } from '../../store'
 	import Button from '$lib/components/Button.svelte'
+	import Row from '$lib/components/Row.svelte'
 
 	const checkout = () => {
 		$isCartLoading = true
@@ -13,69 +12,39 @@
 	}
 </script>
 
-<!-- Fade in? -->
-<div class="cart">
-	<div class="cart__row">
-			<table class="cart__table">
-				<!--{#each cart as {id, title, variant, cost, quantity}}
-					<tr>
-						<a href={`#${id}`}>
-							<td>{quantity} {title} {variant}</td>
-							<td>{cost}</td>
-						</a>
-					</tr>
-				{/each}-->
-				<!-- make scrollable when too long -->
-					<tr>
-						<td>2x T-shirt XL</td>
-						<td>35€</td>
-						<td>
-							<Button action="remove">X</Button>
-						</td>
-					</tr>
+{#if $cart?.length > 0}
+<Row>
+	<table class="cart__table">
+		{#each $cart as {_id: id, name, variant, cost, quantity}}
+			<tr>
+				<a href={`#${id}`}>
+					<td>{quantity}x {name} {variant}</td>
+					<td><Button action="remove">X</Button></td>
+				</a>
+			</tr>
+		{/each}
 
-					<tr>
-						<td>1x T-shirt L</td>
-						<td>40€</td>
-						<td>
-							<Button action="remove">X</Button>
-						</td>
-					</tr>
+			<tfoot>
+				<tr>
+					<td>Total</td>
+					<td>{$cartTotal} EUR (shipping calculated at checkout)</td>
+				</tr>
+			</tfoot>
+	</table>
+</Row>
 
-					<tr>
-						<td>1x Lanyard</td>
-						<td>free</td>
-						<td>
-							<Button action="remove">X</Button>
-						</td>
-					</tr>
-
-					<tfoot>
-						<tr>
-							<td>Total</td>
-							<!-- if 0 free -->
-							<td>75€</td>
-							<td></td>
-						</tr>
-					<tfoot>
-			</table>
-		</div>
-
-		<Button action="submit"
-			on:message={checkout}
-			>
-			Checkout
-		</Button>
-	<!--{:else}
-		<div class="cart__row">
-			<p>Cart empty</p>
-		</div>-->
-</div>
-
+<Button action="submit"
+	on:message={checkout}
+	>
+	Checkout
+</Button>
+{:else}
+	<Row>
+		<p>Cart empty</p>
+	</Row>
+{/if}
 <style>
 	.cart {
-		/*margin-top: var(--space-section);*/
-		margin-top: 4.5rem;
 		background: #fff;
 		align-self: stretch;
 	}
@@ -92,6 +61,10 @@
 
 	.cart__table tr td:last-child {
 		width: 5rem;
+	}
+
+	tfoot {
+		width: 100%;
 	}
 </style>
 

@@ -1,13 +1,18 @@
 <script lang="ts">
+	import imageUrlBuilder from '@sanity/image-url'	
+	import { client } from '$lib/sanity/client'
+
 	export let src: string;
 	export let alt: string;
 
+	const imageBuilder = imageUrlBuilder(client)
+
+	function buildImage (source) {
+		return imageBuilder.image(source)
+	}
+
 	// Cache image colors
 	let loaded: boolean = true;
-
-	//setTimeout(() => {
-	//	loaded = true;
-	//}, 100);
 </script>
 
 {#if loaded}
@@ -15,7 +20,7 @@
 		class="image"
 		srcset=""
 		{alt}
-		{src}
+		src={buildImage(src)}
 		/>
 {:else}
 	<div class="placeholder"></div>

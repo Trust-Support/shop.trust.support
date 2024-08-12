@@ -1,135 +1,107 @@
 <script lang="ts">
 	//import Otp from '$lib/components/Otp'
 	import Button from '$lib/components/Button.svelte'
+	import Row from '$lib/components/Row.svelte'
 	import Range from '$lib/components/Range.svelte'
-	import { cartId, isCartLoading, selectedProductId, selectedProduct, selectedVariantId, selectedVariant } from '../../store'
+	import { isCartLoading, selectedProductId, selectedProduct, selectedVariantId, selectedVariant } from '../../store'
 	import { fetchCart } from '$lib/utils/shopify'
+
+	console.log($selectedProduct)
 
 	let selectedPrice = 40
 
-	const getCartItems = async () => {
-		const response = await fetch(`/cart.json?${new URLSearchParams({ cartId: $cartId })}`)
+	//const getCartItems = async () => {
+	//	const response = await fetch(`/cart.json?${new URLSearchParams({ cartId: $cartId })}`)
 
-		console.log(response.ok)
-		console.log(response)
-
-		//let sum = 0
-
-		//res.body?.data?.cart?.lines?.edges?.forEach((d) => {
-		//	sum += d.node.quantity;
-		//})
-
-		//cartQuantity.set(sum)
-	}
+	//	console.log(response.ok)
+	//	console.log(response)
+	//}
 
 	const addToCart = async (productId: string = $selectedProductId, variantId: string = $selectedVariantId) => {
-		console.log('********************')
-		console.log(`Adding to cart: ${$selectedProductId}, ${$selectedVariantId}.`)
-		console.log('********************')
+		//console.log('********************')
+		//console.log(`Adding to cart: ${$selectedProductId}, ${$selectedVariantId}.`)
+		//console.log('********************')
 
-		$isCartLoading = true
+		//$isCartLoading = true
 
-		//await fetch('/cart.json', {
-		//  method: 'PATCH',
-		//  body: JSON.stringify({
-		//		cartId: `${$cartId}`,
-		//		variantId: `${$selectedVariantId}`
-		//	})
-		//})
+		//// Check availability
+		//await getCartItems()
 
-		// Wait for the API to finish before updating cart items
-		await getCartItems()
-
-		// Loading state = mute ui
-		$isCartLoading = false
+		//// Loading state = mute ui
+		//$isCartLoading = false
 	}
 
 	const selectVariant = (variantId: string) => {
-		console.log('********************')
-		console.log(`Selecting variant: ${variantId}.`)
-		console.log('********************')
-
 		$selectedVariantId = variantId
 	}
 </script>
 
-<div class="form">
-		<div class="form__row">
-			{#if $selectedProduct?.variants?.length > 1}
-				<p>Select size</p>
-				<ul>
-				{#each $selectedProduct?.variants as { id, title, availableForSale }}
-					<li>
-						<Button
-							on:push={() => {
-								selectVariant(id)
-							}}
-							toggled={$selectedVariantId == id}
-							>
-							{title}
-						</Button>
-					</li>
-				{/each}
-				</ul>
-			{:else}
-				<p>One size</p>
-			{/if}
-		</div>
-
-		<div class="form__row">
-			<p>Select price</p>
-
-			<Range
-				initialValue={selectedPrice}
-				min={35}
-				max={65}
-				on:change={(e) => { 
-					selectedPrice = e.detail.value
-				}}
-				/>
-	</div>
-
-	{#if $selectedVariant?.availableForSale}
-		<div class="form__row">
-			<p>
-				{selectedPrice} <span class="currency">{$selectedVariant.priceV2.currencyCode}</span>
-			</p>
-		</div>
-
-		<div class="form__row">
-			<Button
-					action="toggle"
-					on:push={addToCart}
+<Row>
+	{#if $selectedProduct?.variants?.length > 1}
+		<p>Select size</p>
+		<ul>
+		{#each $selectedProduct?.variants as { _key: id, name, quantity }}
+			<li>
+				<Button
+					on:push={() => {
+						selectVariant(id)
+					}}
+					toggled={$selectedVariantId == id}
+					disabled={quantity < 1}
 					>
-				Add to cart</Button>
-		</div>
-		{:else}
-			Sold out
-		{/if}
-</div>
+					{name}
+				</Button>
+			</li>
+		{/each}
+		</ul>
+	{:else}
+		<p>One size</p>
+	{/if}
+</Row>
+
+{#if $selectedProduct.pricePointsEnabled}
+	<Row>
+		<p>Select price</p>
+
+
+		{@const pricePoints = $selectedProduct.pricePoints}
+
+		<Range
+			initialValue={selectedPrice}
+			min={pricePoints[0]}
+			max={pricePoints[pricepoints.length - 1]}
+			on:change={(e) => { 
+				selectedPrice = e.detail.value
+			}}
+			/>
+	</Row>
+{/if}
+
+{#if $selectedVariant.quantity >= 1}
+	<Row>
+		<p>
+			{selectedPrice} <span class="currency">EUR</span>
+		</p>
+	</Row>
+
+	<Row>
+		<Button
+				action="toggle"
+				on:push={addToCart}
+				>
+			Add to cart</Button>
+	</Row>
+{:else}
+	<Row>
+		<p>Sold out</p>
+	</Row>
+{/if}
 
 <style>
-	.form {
-		background: #fff;
-		align-self: stretch;
-		display: flex;
-		gap: var(--space-section);
-		flex-flow: column wrap;
-		padding-bottom: var(--space-row);
-	}
-
-	.form__row {
-		display: flex;
-		gap: 1rem;
-		flex-flow: column wrap;
-		padding: 0 var(--space-row);
-	}
-
-	:global(.form button) {
+	:global(button) {
 		align-self: start;
 	}
 	
-	.size,
 	.currency {
 		color: var(--upsgray-inv);
 	}

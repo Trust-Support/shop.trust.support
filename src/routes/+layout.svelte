@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte'
-	import { cartId, cartCreatedAt, isCartIdExpired, cart } from '../store'
+	import { cartCreatedAt, isCartIdExpired, cart } from '../store'
 
 	//onMount(async () => {
 	//	if (!$cartId || $isCartIdExpired) {

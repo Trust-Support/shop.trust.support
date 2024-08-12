@@ -4,7 +4,7 @@
 </script>
 
 <div class="feed">
-	{#each $products as { id, images }}
+	{#each $products as { _id: id, images }}
 		<Product {id} {images} />
 	{/each}
 </div>

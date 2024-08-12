@@ -7,9 +7,10 @@
 	export let images: string[];
 
 	const intersectCallback = (e) => {
-		if (e.intersectionRatio > 0.5) {
+		console.log(e)
+		if (e.intersectionRatio > 0.4) {
 			$selectedProductId = e.target.id
-			$selectedVariantId = $selectedProduct?.variants[0].id
+			$selectedVariantId = undefined
 		}
 	}
 
@@ -25,9 +26,7 @@
 	id={id}
 	use:intersect={intersectOptions}>
 	{#each images as image}
-		<Image
-			class="product__image"
-			src={image} />
+		<Image src={image} />
 	{/each}
 </div>
 

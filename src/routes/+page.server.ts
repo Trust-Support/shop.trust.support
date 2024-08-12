@@ -1,29 +1,16 @@
-import { getAllProducts } from '$lib/utils/shopify'
+//import { getAllProducts } from '$lib/utils/shopify'
+import { client } from '$lib/sanity/client'
+import { configQuery, productsQuery } from '$lib/sanity/queries'
 import { error } from '@sveltejs/kit'
-
-const stripGid = (gid: string) => gid //gid.split('/').pop()
 
 /** @type {import('./$types').RequestHandler} */
 export async function load({ url }) {
-  const res = await getAllProducts()
+  const config = await client.fetch(configQuery)
+  const products = await client.fetch(productsQuery)
 
-  if (res.status === 200) {
-    const products = res.body?.data?.products?.edges
-			.map(({ node }) => ({
-				...node,
-				id: stripGid(node.id),
-				variants: node?.variants.edges
-					.map(({ node }) => ({
-						...node,
-						id: stripGid(node.id)
-					})),
-				images: node?.images.edges
-				.map(({ node }) => node.url)
-			}))
+  if (products?.length > 0) {
+		return { products, config }
 
-		if (products) {
-      return { products }
-    }
     throw error(404)
   } else {
     throw error(res.status)
