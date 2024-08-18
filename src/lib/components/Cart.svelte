@@ -18,8 +18,6 @@
 
 {#if $cart?.length > 0}
 <Row>
-
-
 	<table class="cart__table">
 		{#each $cart as { product, variant, price, count }}
 			<tr>
@@ -48,7 +46,7 @@
 						Total
 					</td>
 					<td>
-						{formatPrice($cartTotal)} EUR + shipping
+						<b>{formatPrice($cartTotal)} EUR</b> <span class="note">+ shipping</span>
 					</td>
 				</tr>
 			</tfoot>
@@ -87,14 +85,18 @@
 		vertical-align: top;
 	}
 
+
+	.cart__table > tr:first-child td {
+		padding-top: 0;
+	}
+
 	tfoot {
 		border-top: 1px solid var(--trustblau);
 		width: 100%;
 	}
 
-	tfoot td:last-child {
-		padding-top: var(--space-row);
-		font-weight: bold;
+	tfoot tr:last-child td {
+		padding-bottom: 0;
 	}
 </style>
 
