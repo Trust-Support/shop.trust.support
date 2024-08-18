@@ -1,4 +1,3 @@
-import { client } from '$lib/stripe/client'
 import type { RequestHandler } from '@sveltejs/kit'
 import { client } from '$lib/stripe/client'
 import { sessionQuery } from '$lib/stripe/queries'
