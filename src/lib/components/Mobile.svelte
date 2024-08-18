@@ -16,11 +16,17 @@
 			<Product id={product._id} images={product.images} />
 		</Row>
 
-		<Row>
-			<Row>{@html product.description}</Row>
+		<div class="pane-b">
+			<Block>
+				<Row>
+					{@html product.description}
+				</Row>
 
-			<Form {product}/>
-		</Row>
+				<Row>
+					<Form {product}/>
+				</Row>
+			</Block>
+		</div>
 	{/each}
 
 	{#if $cart.length}
@@ -57,6 +63,10 @@
 	.cart {
 		background: var(--bgcolor);
 		flex-grow: 1;
+	}
+
+	.pane-b {
+		padding: var(--space-row);
 	}
 
 	:global(.cart button, .cart-button button) {

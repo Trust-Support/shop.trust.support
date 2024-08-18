@@ -23,12 +23,12 @@
 		display: flex;
 		flex-flow: row wrap;
 		flex: 1;
-		background: var(--bgcolor);
 	}
 
 	@media (max-width: 1024px) {
 		main {
 			flex-flow: column wrap;
+			background: var(--bgcolor);
 		}
 	}
 </style>

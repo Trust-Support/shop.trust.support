@@ -32,10 +32,9 @@
 <style>
 	.product {
 		display: flex;
-		padding: 0.1rem;
+		padding-right: 0.1rem;
 		align-self: start;
 		flex-flow: column wrap;
-		background: var(--bgcolor);
 		min-height: 45vh;
 	}
 
@@ -47,6 +46,7 @@
 			grid-column: span 6;
 			align-self: start;
 			justify-self: start;
+			padding: 0;
 		}
 	}
 </style>

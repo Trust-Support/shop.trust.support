@@ -25,5 +25,11 @@
 		gap: var(--space-row);
 		background: #fff;
 	}
+
+	@media (max-width: 1024px) {
+		.block {
+			padding: 0;
+		}
+	}
 </style>
 
