@@ -1,9 +1,3 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
 @font-face {
 	font-family: 'Karl ST Trial';
 	src:
@@ -11,6 +5,13 @@
 		url('/KarlSTTrial-Regular.woff2') format('woff');
 	font-weight: normal;
 	font-style: normal;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Karl ST Trial';
 }
 
 :root {
@@ -26,13 +27,14 @@
 
 	--space-row: 0.75rem;
 	--space-section: 1rem;
+
+	--bgcolor: var(--acidgreen)
 }
 
 html,
 body {
 	background: #fff;
 	height: 100%;
-	font-family: 'Karl ST Trial';
 }
 
 img {

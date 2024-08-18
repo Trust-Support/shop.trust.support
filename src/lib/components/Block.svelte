@@ -5,15 +5,15 @@
 
 <div
 	class="block"
-	transition:scale={{
+	>
+	<!--transition:scale={{
 		delay: 0,
 		duration: 750,
 		x: 100,
 		y: 500,
 		opacity: 0.5,
 		easing: quintOut
-	}}
-	>
+	}}-->
 	<slot/>	
 </div>
 

@@ -2,39 +2,62 @@
 	import { cart, cartTotal, isCartLoading } from '../../store'
 	import Button from '$lib/components/Button.svelte'
 	import Row from '$lib/components/Row.svelte'
+	import { formatPrice } from '$lib/helpers/products'
+	import { getCheckoutURL } from '$lib/helpers/cart'
 
-	const checkout = () => {
-		$isCartLoading = true
+	const checkout = async () => {
+			$isCartLoading = true
 
-		window.open(checkoutUrl, '_blank')
+			const checkoutURL = await getCheckoutURL($cart)
 
-		$isCartLoading = false
+			$isCartLoading = false
+
+			window.location.href = checkoutURL
 	}
 </script>
 
 {#if $cart?.length > 0}
 <Row>
+
+
 	<table class="cart__table">
-		{#each $cart as {_id: id, name, variant, cost, quantity}}
+		{#each $cart as { product, variant, price, count }}
 			<tr>
-				<a href={`#${id}`}>
-					<td>{quantity}x {name} {variant}</td>
-					<td><Button action="remove">X</Button></td>
-				</a>
+				<td>
+					{count}x {product.name} {variant.name}
+				</td>
+				<td>
+					{formatPrice(price)} EUR
+				</td>
+				<td>
+					<Button
+						style="remove"
+						on:push={() => {
+							cart.remove(variant)
+						}}
+						>
+							-
+						</Button>
+				</td>	
 			</tr>
 		{/each}
 
 			<tfoot>
 				<tr>
-					<td>Total</td>
-					<td>{$cartTotal} EUR (shipping calculated at checkout)</td>
+					<td>
+						Total
+					</td>
+					<td>
+						{formatPrice($cartTotal)} EUR + shipping
+					</td>
 				</tr>
 			</tfoot>
 	</table>
 </Row>
 
-<Button action="submit"
-	on:message={checkout}
+<Button
+	style="submit"
+	on:push={checkout}
 	>
 	Checkout
 </Button>
@@ -59,12 +82,19 @@
 		width: 100%;
 	}
 
-	.cart__table tr td:last-child {
-		width: 5rem;
+	.cart__table td {
+		padding: var(--space-row) 0;
+		vertical-align: top;
 	}
 
 	tfoot {
+		border-top: 1px solid var(--trustblau);
 		width: 100%;
+	}
+
+	tfoot td:last-child {
+		padding-top: var(--space-row);
+		font-weight: bold;
 	}
 </style>
 

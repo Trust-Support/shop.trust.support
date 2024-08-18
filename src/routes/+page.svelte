@@ -1,47 +1,42 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
 	import MediaQuery from 'svelte-media-queries'
-	import Feed from '$lib/components/Feed.svelte'
-	import Details from '$lib/components/Details.svelte'
-	import { products, selectedProductId, selectedProduct, selectedVariantId } from '../store'
+	import Mobile from '$lib/components/Mobile.svelte'
+	import Desktop from '$lib/components/Desktop.svelte'
+	import { products, isCartIdExpired, cart } from '../store'
 
 	export let data
 
+	let isMobile
+
 	$products = data.products
 
-	// Base on observer
-	$selectedProductId = $products[0]._id
+	onMount(async () => {
+		console.log($isCartIdExpired)
 
-	let isMobile
+		if (!$isCartIdExpired) {
+			try {
+				const cachedCart = localStorage.getItem('cart')
+
+				console.log(cachedCart)
+
+				if (cachedCart?.length) {
+					$cart = JSON.parse(cachedCart)
+				}
+			} catch (err) {
+				console.error(err)
+			}
+		}
+	})
+
 </script>
 
-<MediaQuery query='(max-width: 1024px)' bind:isMobile/>
+<MediaQuery query='(max-width: 1024px)' bind:matches={isMobile}>
+		{#if isMobile}
+			<Mobile/>
+		{:else}
+			<Desktop/>
+		{/if}
+</MediaQuery>
 
-<main class="content">
-	{#if isMobile}
-		{#each $products as $product}
-			<Feed product={$product}/>
-			<Details product={$product}/>
-		{/each}
-	{:else}
-		<Feed/>
-		<Details/>
-	{/if}
-</main>
-
-<style>
-	.content {
-		position: relative;
-		z-index: 1;
-		min-height: 100%;
-		width: 100%;
-		display: flex;
-		flex-flow: row wrap;
-	}
-
-	@media (max-width: 1024px) {
-		.content {
-			flex-direction: column;
-		}
-	}
-</style>
 

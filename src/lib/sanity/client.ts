@@ -1,5 +1,5 @@
-import { createClient } from '@sanity/client';
-import { apiVersion, projectId, dataset, studioUrl } from '$lib/sanity/api';
+import { createClient } from '@sanity/client'
+import { apiVersion, projectId, dataset, studioUrl } from '$lib/sanity/api'
 
 export const client = createClient({
 	projectId,
@@ -9,4 +9,5 @@ export const client = createClient({
 	stega: {
 		studioUrl
 	}
-});
+})
+

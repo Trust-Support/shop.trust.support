@@ -7,10 +7,9 @@
 	export let images: string[];
 
 	const intersectCallback = (e) => {
-		console.log(e)
 		if (e.intersectionRatio > 0.4) {
 			$selectedProductId = e.target.id
-			$selectedVariantId = undefined
+			//$selectedVariantId = undefined
 		}
 	}
 
@@ -36,7 +35,7 @@
 		padding: 0.1rem;
 		align-self: start;
 		flex-flow: column wrap;
-		background: #fff;
+		background: var(--bgcolor);
 		min-height: 45vh;
 	}
 

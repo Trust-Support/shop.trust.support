@@ -1,34 +1,35 @@
 <script lang="ts">
 	import '../app.css';
-	import { onMount } from 'svelte'
-	import { cartCreatedAt, isCartIdExpired, cart } from '../store'
+	import { primaryColor } from '../store'
 
-	//onMount(async () => {
-	//	if (!$cartId || $isCartIdExpired) {
-	//		({ body: { data: { cartCreate: { cart: $cart }}}} = await fetch('/cart.json'))
-
-	//		$cartId = $cart?.id
-	//		$cartCreatedAt = Date.now()
-	//	}
-	//})
+	const style = `:root { --bgcolor: ${$primaryColor ? $primaryColor : `var(--trustblau)` }; }`
 </script>
 
 <svelte:head>
 	<title>Store</title>
+	<!--<style>{style}</style>-->
 </svelte:head>
 
-<main class="content">
+<main>
 	<slot/>
 </main>
 
 <style>
-	.content {
+	main {
 		position: relative;
 		z-index: 1;
 		min-height: 100%;
 		width: 100%;
 		display: flex;
 		flex-flow: row wrap;
+		flex: 1;
+		background: var(--bgcolor);
+	}
+
+	@media (max-width: 1024px) {
+		main {
+			flex-flow: column wrap;
+		}
 	}
 </style>
 

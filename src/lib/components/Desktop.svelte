@@ -1,17 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import Matrix from '$lib/components/Matrix.svelte'
+	import Product from '$lib/components/Product.svelte'
 	import Block from '$lib/components/Block.svelte'
 	import Row from '$lib/components/Row.svelte'
 	import Form from '$lib/components/Form.svelte'
 	import Cart from '$lib/components/Cart.svelte'
-	import { isCartLoading, selectedProduct, selectedProductId, contentRects } from '../../store'
+	import { contentRects, cart, products, selectedProductId, selectedProduct, selectedVariantId } from '../../store'
+	import Button from '$lib/components/Button.svelte'
+
+	$selectedProductId = $products[0]._id
 
 	let contentEl
 
-	// Throttle
 	const setRects = () => {
-		const newContentRects = [...Object.values(contentEl.children).map((el) => el.getBoundingClientRect())]
+		const newContentRects = [
+			...Object.values(contentEl.children).map((el) => el.getBoundingClientRect())
+		]
 
     const contentRectsUpdated = newContentRects.some((rect, i) => {
       const newRect = $contentRects[i]
@@ -36,41 +40,47 @@
 	on:scroll={setRects}
 />
 
-<div class="details">
-	<div class="details__backdrop">
+<div class="pane-l">
+	{#each $products as product}
+		<Product id={product._id} images={product.images} />
+	{/each}
+</div>
+
+<div class="pane-r">
+	<!--<div class="pane-r__backdrop">
 		<Matrix />
-	</div>
+	</div>-->
 
 	<div
+		class="pane-r__content"
 		bind:this={contentEl}
-		class="details__content"
-		class:details__content--muted={$isCartLoading}
 		>
 		<Block>
-			<Row>
-				{@html $selectedProduct?.description}
-			</Row>
-
-			<Form/>
+			<Row>{@html $selectedProduct.description}</Row>
+			<Form product={$selectedProduct}/>	
 		</Block>
 
 		<Block>
-			<Cart/>
+			<Cart/>	
 		</Block>
 	</div>
 
-	<footer class="details__footer">
+	<footer class="footer">
 		<a href="mailto:info@trust.support">info@trust.support</a> - Kluckstr. 25 Berlin -
-			<a
-				href="https://trust.support/about/legal-disclosure"
-				target="_blank"
-				>Legal disclosore
-			</a>
+		<a
+			href="https://trust.support/about/legal-disclosure"
+			target="_blank"
+			>Legal disclosore
+		</a>
 	</footer>
 </div>
 
 <style>
-	.details {
+	.pane-l {
+			flex: 0.45;
+		}
+
+	.pane-r {
 		flex: 0.55;
 		display: flex;
 		flex-direction: column;
@@ -78,62 +88,56 @@
 		align-self: flex-start;
 		top: 0;
 		min-height: 100vh;
-		background: #fff;
+		background: var(--bgcolor);
 	}
 
-	.details__content {
+	.pane-r__content {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
 		/* Fork with no padding and set witdth */
-		padding: 6rem 4.5rem 4.5rem 4.5rem;
-		gap: 4.5rem;
+		padding: 2.5rem;
+		gap: 2.5rem;
 		justify-content: start;
 		align-items: center;
 		/*opacity: 0;*/
+		border-left: 1px solid var(--trustblau);
 	}
 
-	:global(.details__content--muted *) {
-		opacity: 0.95;
-	}
-
-	.details__backdrop {
+	.backdrop {
 		overflow: hidden;
 		position: absolute;
 		width: 100%;
 		height: 100%;
 		z-index: -1;
-		border-left: 1px solid var(--trustblau);
+		background: var(--bgcolor);
 	}
 
-	.details__footer {
+	.footer {
 		border-top: 1px solid var(--trustblau);
+		border-left: 1px solid #fff;
 		text-align: center;
-		padding: var(--space-row) var(--space-section);
+		padding: var(--space-section);
 		background: #fff;
 		color: var(--upsgray);
 		flex-basis: 100%;
 		align-self: stretch;
 	}
 
-	.details__footer a,
-	.details__footer a:visited {
+	.footer a,
+	.footer a:visited {
 		transition: color 0.5s linear;
 		color: var(--upsgray);
 		text-decoration: none;
 	}
 
-	.details__footer a:hover {
+	.footer a:hover {
 		color: black;
 	}
-
+	
 	@media (max-width: 1024px) {
-		.details {
-			width: 100%;
-			height: 300px;
-			position: fixed;
-			bottom: 0;
-			left: 0;
+		.pane-l, .pane-r{
+			display: none;
 		}
 	}
 </style>

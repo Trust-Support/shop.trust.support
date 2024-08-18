@@ -8,6 +8,7 @@
 <style>
 	.row {
 		display: flex;
+		flex-grow: 1;
 		gap: 1rem;
 		flex-flow: column wrap;
 		padding: var(--space-row);

@@ -3,105 +3,89 @@
 	import Button from '$lib/components/Button.svelte'
 	import Row from '$lib/components/Row.svelte'
 	import Range from '$lib/components/Range.svelte'
-	import { isCartLoading, selectedProductId, selectedProduct, selectedVariantId, selectedVariant } from '../../store'
-	import { fetchCart } from '$lib/utils/shopify'
+	import { addToCart } from '$lib/helpers/cart'
+	import { formatPrice } from '$lib/helpers/products'
 
-	console.log($selectedProduct)
+	export let product
 
-	let selectedPrice = 40
+	let selectedVariant
+	let selectedPrice
 
-	//const getCartItems = async () => {
-	//	const response = await fetch(`/cart.json?${new URLSearchParams({ cartId: $cartId })}`)
+	const availableVariants = product.variants
+		.filter(({ quantity }) => quantity > 0)
 
-	//	console.log(response.ok)
-	//	console.log(response)
-	//}
+	selectedVariant = availableVariants.length ?
+		availableVariants[0] :
+		product.variants[0]
 
-	const addToCart = async (productId: string = $selectedProductId, variantId: string = $selectedVariantId) => {
-		//console.log('********************')
-		//console.log(`Adding to cart: ${$selectedProductId}, ${$selectedVariantId}.`)
-		//console.log('********************')
-
-		//$isCartLoading = true
-
-		//// Check availability
-		//await getCartItems()
-
-		//// Loading state = mute ui
-		//$isCartLoading = false
-	}
-
-	const selectVariant = (variantId: string) => {
-		$selectedVariantId = variantId
-	}
+	selectedPrice = selectedVariant?.minPrice
 </script>
 
 <Row>
-	{#if $selectedProduct?.variants?.length > 1}
-		<p>Select size</p>
-		<ul>
-		{#each $selectedProduct?.variants as { _key: id, name, quantity }}
-			<li>
-				<Button
-					on:push={() => {
-						selectVariant(id)
-					}}
-					toggled={$selectedVariantId == id}
-					disabled={quantity < 1}
-					>
-					{name}
-				</Button>
-			</li>
-		{/each}
-		</ul>
-	{:else}
-		<p>One size</p>
-	{/if}
+	<p>Select size</p>
+
+	<ul>
+	{#each product.variants as { name, quantity, sku }}
+		<li>
+			<Button
+				disabled={quantity < 1}
+				on:push={() => {
+					const index = product.variants.findIndex((variant) => variant.sku == sku)
+
+					if (index !== -1)  {
+						selectedVariant = product.variants[index]
+					}
+				}}
+				toggled={selectedVariant?.sku == sku}
+				>
+				{name}
+			</Button>
+		</li>
+	{/each}
+	</ul>
 </Row>
 
-{#if $selectedProduct.pricePointsEnabled}
-	<Row>
-		<p>Select price</p>
-
-
-		{@const pricePoints = $selectedProduct.pricePoints}
+<Row>
+	{#if selectedVariant.minPrice}
+		<p class:muted={!selectedVariant?.quantity < 1}>
+			Select price
+		</p>
 
 		<Range
-			initialValue={selectedPrice}
-			min={pricePoints[0]}
-			max={pricePoints[pricepoints.length - 1]}
-			on:change={(e) => { 
+			initialValue={selectedVariant?.defaultPrice || selectedVariant.minPrice}
+			min={selectedVariant?.minPrice}
+			max={selectedVariant?.maxPrice || 10000}
+			on:change={(e) => {
 				selectedPrice = e.detail.value
 			}}
 			/>
-	</Row>
-{/if}
+	{/if}
 
-{#if $selectedVariant.quantity >= 1}
-	<Row>
-		<p>
-			{selectedPrice} <span class="currency">EUR</span>
-		</p>
-	</Row>
+	<p>
+		{selectedVariant?.name} / 
+		{#if selectedVariant?.quantity < 1}
+			Sold out
+		{:else}
+			{formatPrice(selectedPrice)} EUR
+		{/if}
+	</p>
 
-	<Row>
-		<Button
-				action="toggle"
-				on:push={addToCart}
-				>
-			Add to cart</Button>
-	</Row>
-{:else}
-	<Row>
-		<p>Sold out</p>
-	</Row>
-{/if}
+	<Button
+		disabled={selectedVariant.quantity < 1}
+		action="toggle"
+		on:push={() => {
+			addToCart(product, selectedVariant, selectedPrice)
+		}}
+		>
+		Add to cart
+	</Button>
+</Row>
 
 <style>
 	:global(button) {
 		align-self: start;
 	}
-	
+
 	.currency {
 		color: var(--upsgray-inv);
 	}

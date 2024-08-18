@@ -6,19 +6,19 @@
 	// By variant ID
 	export let disabled: boolean
 	export let toggled: boolean = false
-	export let action: 'toggle' | 'submit' | 'remove' = 'toggle'
+	export let style: 'toggle' | 'submit' | 'remove' = 'toggle'
 </script>
 
 <button
 	on:click={(e) => {
-		dispatch('push', e)
+		!disabled && dispatch('push', e)
 	}}
-	disabled={false}
+	disabled={disabled}
 	class="button"
-	class:button--toggle={action == 'toggle'}
+	class:button--toggle={style == 'toggle'}
 	class:button--toggle--on={toggled}
-	class:button--submit={action == 'submit'}
-	class:button--remove={action == 'remove'}
+	class:button--submit={style == 'submit'}
+	class:button--remove={style == 'remove'}
 	>
 	<slot/>
 </button>
@@ -33,6 +33,7 @@
 		cursor: pointer;
 		font-weight: normal;
 		transition: box-shadow linear 0.15s;
+		touch-action: manipulation;
 	}
 
 	.button--toggle {
@@ -64,8 +65,8 @@
 	}
 
 	.button[disabled] {
-		background: #fff;
 		cursor: not-allowed;
+		opacity: 0.65;
 	}
 
 	.button--toggle:not([disabled]):hover {
@@ -75,22 +76,5 @@
 	.button--submit:not([disabled]):hover {
 		box-shadow: inset 0 0 0.25px var(--upsgray-inv-30);
 	}
-
-	/*
-	.button--highlighted {
-		box-shadow: inset 0 0 15px #0075c4;
-		background: var(--trustblau);
-		transition: box-shadow 0.5s linear;
-		border-radius: 4px;
-	}	
-
-	.button--submit.highlighted:not([disabled]):hover {
-		background: var(--trustblau);
-	}
-
-	.button--submit-highlighted { }
-
-	.button--submit-highlighted:not([disabled]):hover { }
-	*/
 </style>
 
