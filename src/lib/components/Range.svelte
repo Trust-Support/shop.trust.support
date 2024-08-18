@@ -201,7 +201,7 @@
     {id}
     on:mousedown={onTrackEvent}
     on:touchstart={onTrackEvent}
-  >
+		>
     <div class="range__track" bind:this={container}>
       <div class="range__track--highlighted" bind:this={progressBar} />
       <div
@@ -212,7 +212,7 @@
         on:mousedown={onDragStart}
         on:mouseover={() => (thumbHover = true)}
         on:mouseout={() => (thumbHover = false)}
-      >
+				>
      </div>
     </div>
   </div>
