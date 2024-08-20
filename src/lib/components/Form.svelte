@@ -18,7 +18,7 @@
 		availableVariants[0] :
 		product.variants[0]
 
-	selectedPrice = selectedVariant?.minPrice
+	selectedPrice = product?.defaultPrice
 </script>
 
 <Row>
@@ -46,15 +46,15 @@
 </Row>
 
 <Row>
-	{#if selectedVariant.minPrice}
+	{#if product.slidingScalePricing}
 		<p class:muted={!selectedVariant?.quantity < 1}>
 			Select price
 		</p>
 
 		<Range
-			initialValue={selectedVariant?.defaultPrice || selectedVariant.minPrice}
-			min={selectedVariant?.minPrice}
-			max={selectedVariant?.maxPrice || 10000}
+			initialValue={product?.defaultPrice}
+			min={product?.minPrice}
+			max={product?.maxPrice}
 			on:change={(e) => {
 				selectedPrice = e.detail.value
 			}}
@@ -66,7 +66,8 @@
 		{#if selectedVariant?.quantity < 1}
 			Sold out
 		{:else}
-			{formatPrice(selectedPrice)} EUR
+			{product.slidingScalePricing}
+			{product.slidingScalePricing ? formatPrice(selectedPrice) : formatPrice(product.price)} EUR
 		{/if}
 	</p>
 
