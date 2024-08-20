@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PortableText } from '@portabletext/svelte'
 	import Product from '$lib/components/Product.svelte'
 	import Block from '$lib/components/Block.svelte'
 	import Row from '$lib/components/Row.svelte'
@@ -19,7 +20,9 @@
 		<div class="pane-b">
 			<Block>
 				<Row>
-					{@html product.description}
+					<PortableText
+						value={product.description}
+						/>
 				</Row>
 
 				<Row>

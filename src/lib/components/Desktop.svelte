@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PortableText } from '@portabletext/svelte'
 	import { onMount } from 'svelte'
 	import Product from '$lib/components/Product.svelte'
 	import Block from '$lib/components/Block.svelte'
@@ -56,7 +57,11 @@
 		bind:this={contentEl}
 		>
 		<Block>
-			<Row>{@html $selectedProduct.description}</Row>
+			<Row>
+				<PortableText
+					value={$selectedProduct.description}
+					/>
+			</Row>
 			<Form product={$selectedProduct}/>	
 		</Block>
 

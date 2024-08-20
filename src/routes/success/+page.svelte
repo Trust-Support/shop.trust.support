@@ -5,7 +5,8 @@
 </script>
 
 <div class="success">
-	<p>Order complete!</p>
+	<p>Order {orderID} received</p>
+	<p>Thank you</p>
 </div>
 
 <style>
