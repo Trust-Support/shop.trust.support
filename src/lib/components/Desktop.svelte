@@ -123,7 +123,7 @@
 		border-left: 1px solid #fff;
 		text-align: center;
 		padding: var(--space-section);
-		background: var(--seconadrycolor);
+		background: var(--bgcolor);
 		color: var(--upsgray);
 		flex-basis: 100%;
 		align-self: stretch;

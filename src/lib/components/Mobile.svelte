@@ -14,7 +14,7 @@
 {#if !cartOpen}
 	{#each $products as product}
 		<Row>
-			<Product id={product._id} images={product.images} />
+			<Product id={product._id} images={[product.images[0]]} />
 		</Row>
 
 		<div class="pane-b">
@@ -86,11 +86,10 @@
 	}
 
 	.footer {
-		border-top: 1px solid var(--trustblau);
-		border-left: 1px solid #fff;
+		border-top: 1px solid var(--bordercolor);
 		text-align: center;
 		padding: var(--space-section);
-		background: #fff;
+		background: var(--bgcolor);
 		color: var(--upsgray);
 		flex-basis: 100%;
 		align-self: stretch;
