@@ -31,7 +31,7 @@
 
 </script>
 
-<MediaQuery query='(max-width: 1024px)' bind:matches={isMobile}>
+<MediaQuery query='(max-width: 1100px)' bind:matches={isMobile}>
 		{#if isMobile}
 			<Mobile/>
 		{:else}

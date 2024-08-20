@@ -140,7 +140,7 @@
 		color: black;
 	}
 	
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		.pane-l, .pane-r{
 			display: none;
 		}

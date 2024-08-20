@@ -25,7 +25,7 @@
 		flex: 1;
 	}
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		main {
 			flex-flow: column wrap;
 			background: var(--bgcolor);

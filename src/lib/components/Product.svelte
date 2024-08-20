@@ -35,11 +35,11 @@
 		/*padding-right: 0.1rem;*/
 		align-self: start;
 		flex-flow: column wrap;
-		min-height: 45vh;
+		/*min-height: 45vh;*/
 	}
 
 	/* Grid on mobile? */
-	@media (max-width: 1024px) {
+	@media (max-width: 1100px) {
 		.product {
 			width: 100%;
 			grid-row: span 6;
