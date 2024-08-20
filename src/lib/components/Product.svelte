@@ -32,7 +32,7 @@
 <style>
 	.product {
 		display: flex;
-		padding-right: 0.1rem;
+		/*padding-right: 0.1rem;*/
 		align-self: start;
 		flex-flow: column wrap;
 		min-height: 45vh;
