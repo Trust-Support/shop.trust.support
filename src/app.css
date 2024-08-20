@@ -28,7 +28,9 @@
 	--space-row: 0.75rem;
 	--space-section: 1rem;
 
-	--bgcolor: var(--acidgreen)
+	--bgcolor: var(--acidgreen);
+	--bordercolor: var(--acidgreen);
+	--secondarycolor: var(--acidgreen);
 }
 
 html,

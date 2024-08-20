@@ -1,12 +1,16 @@
 <script>
 	import { page } from '$app/stores'
+	import { browser } from '$app/environment'
 
-	const cachedCart = localStorage.setItem('cart', [])
+	// Clear cart
+	if (browser) {
+		localStorage.setItem('cart', [])
+	}
 </script>
 
 <div class="success">
-	<p>Order {orderID} received</p>
-	<p>Thank you</p>
+	<p>{`Order received`}</p>
+	<p>{`Thank you <3`}</p>
 </div>
 
 <style>

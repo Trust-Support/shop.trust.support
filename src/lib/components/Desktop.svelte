@@ -82,11 +82,11 @@
 
 <style>
 	.pane-l {
-			flex: 0.45;
+			flex: 0.5;
 		}
 
 	.pane-r {
-		flex: 0.55;
+		flex: 0.5;
 		display: flex;
 		flex-direction: column;
 		position: sticky;
@@ -106,7 +106,7 @@
 		justify-content: start;
 		align-items: center;
 		/*opacity: 0;*/
-		border-left: 1px solid var(--trustblau);
+		border-left: 1px solid var(--bordercolor);
 	}
 
 	.backdrop {
@@ -119,11 +119,11 @@
 	}
 
 	.footer {
-		border-top: 1px solid var(--trustblau);
+		border-top: 1px solid var(--bordercolor);
 		border-left: 1px solid #fff;
 		text-align: center;
 		padding: var(--space-section);
-		background: #fff;
+		background: var(--seconadrycolor);
 		color: var(--upsgray);
 		flex-basis: 100%;
 		align-self: stretch;
