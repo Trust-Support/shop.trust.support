@@ -1,9 +1,24 @@
 <script lang="ts">
 	import { cart, cartTotal, isCartLoading } from '../../store'
+	import { browser } from '$app/environment'
 	import Button from '$lib/components/Button.svelte'
 	import Row from '$lib/components/Row.svelte'
 	import { formatPrice } from '$lib/helpers/products'
 	import { getCheckoutURL } from '$lib/helpers/cart'
+
+	if (browser) {
+		try {
+			const cachedCart = JSON.parse(localStorage.getItem('cart'))
+
+			if (cachedCart?.length) {
+				cart.set(cachedCart)
+				console.log($cart)
+			}
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
 
 	const checkout = async () => {
 			$isCartLoading = true

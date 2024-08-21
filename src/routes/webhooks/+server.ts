@@ -28,20 +28,20 @@ export async function POST ({ request }) {
   }
 
   if (event.type == 'checkout.session.completed') {
-		const checkoutSessionCompleted = event.data.object
-		const sessionLineItems = await stripeClient
-			.checkout
-			.sessions
-			.listLineItems(checkoutSessionCompleted.id)
+		//const checkoutSessionCompleted = event.data.object
+		//const sessionLineItems = await stripeClient
+		//	.checkout
+		//	.sessions
+		//	.listLineItems(checkoutSessionCompleted.id)
 
-		const lineItems = sessionLineItems.data
+		//const lineItems = sessionLineItems.data
 
-		const orderTransaction = createOrderTransaction(
-				checkoutSessionCompleted,
-				lineItems
-		)
+		//const orderTransaction = createOrderTransaction(
+		//		checkoutSessionCompleted,
+		//		lineItems
+		//)
 
-		await sanityClient.mutate(orderTransaction)
+		//await sanityClient.mutate(orderTransaction)
   } else {
 		console.log(`Unhandled event type ${event.type}`)
 	}

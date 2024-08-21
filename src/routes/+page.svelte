@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
+	import { browser } from '$app/environment'
 	import MediaQuery from 'svelte-media-queries'
 	import Mobile from '$lib/components/Mobile.svelte'
 	import Desktop from '$lib/components/Desktop.svelte'
@@ -10,25 +11,6 @@
 	let isMobile
 
 	$products = data.products
-
-	onMount(async () => {
-		console.log($isCartIdExpired)
-
-		if (!$isCartIdExpired) {
-			try {
-				const cachedCart = localStorage.getItem('cart')
-
-				console.log(cachedCart)
-
-				if (cachedCart?.length) {
-					$cart = JSON.parse(cachedCart)
-				}
-			} catch (err) {
-				console.error(err)
-			}
-		}
-	})
-
 </script>
 
 <MediaQuery query='(max-width: 1100px)' bind:matches={isMobile}>

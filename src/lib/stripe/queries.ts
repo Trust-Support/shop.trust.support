@@ -37,8 +37,8 @@ export const sessionQuery = (cartItems: any[]) => {
 	return {
 		line_items: [...lineItems],
 		mode: 'payment',
-		success_url: 'https://store.trust.support/success',
-		cancel_url: 'https://store.trust.support',
+		success_url: 'http://localhost:5173/success',
+		cancel_url: 'http://localhost:5173/cancel',
 		shipping_address_collection: {
 			allowed_countries: [
 				'AU',
