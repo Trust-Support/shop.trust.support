@@ -58,7 +58,6 @@
 		>
 		<Block>
 			<Row>
-				{$selectedProduct.description}
 				<PortableText
 					value={$selectedProduct.description}
 					/>
