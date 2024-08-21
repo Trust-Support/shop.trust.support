@@ -16,11 +16,11 @@ export const addToCart = async (
 }
 
 
-export const getCheckoutURL = async (cart) => {
+export const getCheckoutURL = async (cart, rate) => {
 	try {
 		const res = await fetch('/checkout', {
 			method: 'POST',
-			body: JSON.stringify(cart),
+			body: JSON.stringify({ cart, rate }),
 			headers: {
 				'Content-Type': 'application/json',
 			}

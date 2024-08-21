@@ -6,7 +6,7 @@ import { sessionQuery } from '$lib/stripe/queries'
 export async function POST ({ request }) {
 	const data = await request.json()
 
-	const session = await client.checkout.sessions.create(sessionQuery(data))
+	const session = await client.checkout.sessions.create(sessionQuery(data.cart, data.rate))
 
 	return new Response(JSON.stringify({ checkoutURL: session.url }))
 }

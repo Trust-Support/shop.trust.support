@@ -46,7 +46,6 @@ export const cart: Writable<Cart> = (() => {
 
 	return {
 		subscribe,
-
 		set,
 
 		add: (product: Produt, variant: Variant, price: number) =>
@@ -98,6 +97,8 @@ export const cart: Writable<Cart> = (() => {
 
 cart.subscribe((val) =>
 	browser && val?.length && localStorage.setItem('cart', JSON.stringify(val)))
+
+export const shippingRate = writable(undefined)
 
 export const cartCreatedAt = writable(
 	(browser && localStorage.getItem('cartCreatedAt')) ||

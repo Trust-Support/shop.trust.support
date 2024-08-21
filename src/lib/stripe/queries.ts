@@ -20,10 +20,22 @@ export const pricesQuery = (productIDs: string[]) => {
 	}
 }
 
-export const sessionQuery = (cartItems: any[]) => {
+export const sessionQuery = (cartItems: any[], rate: any) => {
 	//validate mininmum price?
 
-	console.log(cartItems)
+	const shippingRates = {
+		'DE': 'shr_1Pq18sEsJX1Xg1qaJ8k7hbYk',
+		'EU': 'shr_1Pq19FEsJX1Xg1qaI1rdbEi4',
+		'UK': 'shr_1Pq19bEsJX1Xg1qaCDqlRJoN',
+		'Americas': 'shr_1Pq19xEsJX1Xg1qayS7t3VOj',
+		'Asia': 'shr_1Pq1APEsJX1Xg1qakOdv2lc2',
+		'Serbia': 'shr_1PqN60EsJX1Xg1qaQ6d8nsPx',
+		'North Africa': 'shr_1PqN5REsJX1Xg1qaVy3VJZO1',
+	}
+
+	console.log(rate)
+	
+	const shippingRate = shippingRates[rate.shipping]
 
 	const lineItems = cartItems
 		.map((item) => ({
@@ -53,62 +65,17 @@ export const sessionQuery = (cartItems: any[]) => {
 			'https://store.trust.support/cancel',
 		shipping_address_collection: {
 			allowed_countries: [
-				'AU',
-				'AT',
-				'BE',
-				'BR',
-				'BG',
-				'CA',
-				'HR',
-				'CY',
-				'CZ',
-				'DK',
-				'EE',
-				'FI',
-				'FR',
-				'DE',
-				'GI',
-				'GR',
-				'HK',
-				'HU',
-				'IN',
-				'ID',
-				'IE',
-				'IT',
-				'JP',
-				'LV',
-				'LI',
-				'LT',
-				'LU',
-				'MY',
-				'MT',
-				'MX',
-				'NL',
-				'NZ',
-				'NO',
-				'PL',
-				'PT',
-				'RO',
-				'SG',
-				'SK',
-				'SI',
-				'ES',
-				'SE',
-				'CH',
-				'TH',
-				'AE',
-				'GB',
-				'US'
+				rate.code,
 			],
 		},
 		shipping_options: [
 			{
-				shipping_rate: 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
+				shipping_rate: shippingRate,
 			},
 		],
-		//phone_number_collection: {
-		//	enabled: true,
-		//},
+		phone_number_collection: {
+			enabled: true,
+		},
 		automatic_tax: {
 			enabled: true
 		},
