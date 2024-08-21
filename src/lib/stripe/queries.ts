@@ -59,10 +59,10 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 		mode: 'payment',
 		success_url: dev ?
 			'http://localhost:5173/success' :
-			'https://store.trust.support/success',
+			'https://shop.trust.support/success',
 		cancel_url: dev ?
 			'http://localhost:5173/cancel' :
-			'https://store.trust.support/cancel',
+			'https://shop.trust.support/cancel',
 		shipping_address_collection: {
 			allowed_countries: [
 				rate.code,
