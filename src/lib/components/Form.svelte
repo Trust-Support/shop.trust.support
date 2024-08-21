@@ -66,7 +66,6 @@
 		{#if selectedVariant?.quantity < 1}
 			Sold out
 		{:else}
-			{product.slidingScalePricing}
 			{product.slidingScalePricing ? formatPrice(selectedPrice) : formatPrice(product.price)} EUR
 		{/if}
 	</p>
