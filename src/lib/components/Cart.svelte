@@ -257,7 +257,11 @@
 	on:push={checkout}
 	disabled={!selectedCountry}
 	>
-	Checkout
+	{#if !selectedCountry}
+		Please select shipping country
+	{:else}
+		Checkout
+	{/if}
 </Button>
 {:else}
 	<Row>

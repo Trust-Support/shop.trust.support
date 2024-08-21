@@ -16,8 +16,8 @@
 	disabled={disabled}
 	class="select"
 	>
+	<option selected disabled hidden>Select country</option>	
 	{#each options as { code, name }}
-		<option selected disabled hidden>Select country</option>	
 		<option value={code}>{name}</option>
 	{/each}
 </select>
@@ -33,6 +33,8 @@
 		cursor: pointer;
 		transition: box-shadow linear 0.15s;
 		touch-action: manipulation;
+		max-width: 100%;
+		min-width: 0;
 	}
 </style>
 
