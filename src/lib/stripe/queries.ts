@@ -1,7 +1,9 @@
 import { dev } from '$app/environment';
 
 export const productQuery = (id: string) => ({ id })
+
 export const productsQuery = (ids: string[]) => ({ ids, limit: 100 })
+
 export const pricesQuery = (productIDs: string[]) => {
 	const products = productIDs
 		.map(id => `product:"${id}"`)
@@ -27,7 +29,11 @@ export const sessionQuery = (cartItems: any[]) => {
 		.map((item) => ({
 			price_data: {
 				currency: 'EUR',
-				unit_amount: item.price,
+				// :D
+				unit_amount: Math.max(item.price, 3500),
+					//item.product.slidingScalePricing ?
+					//Math.max(item.price, item.product.minPrice) :
+					//item.product.price,
 				tax_behavior: 'exclusive',
 				product_data: {
 					name: `${item.product.name}	${item.variant.name}`,
