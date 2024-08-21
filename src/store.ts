@@ -95,19 +95,19 @@ export const cart: Writable<Cart> = (() => {
 	}
 })()
 
-cart.subscribe((val) =>
-	browser && val?.length && localStorage.setItem('cart', JSON.stringify(val)))
+//cart.subscribe((val) =>
+//	browser && val?.length && localStorage.setItem('cart', JSON.stringify(val)))
 
 export const shippingRate = writable(undefined)
 
 export const cartCreatedAt = writable(
-	(browser && localStorage.getItem('cartCreatedAt')) ||
+	//(browser && localStorage.getItem('cartCreatedAt')) ||
 	undefined
 )
 
-cartCreatedAt.subscribe((val) => 
-	browser && localStorage.setItem('cartCreatedAt', val)
-)
+//cartCreatedAt.subscribe((val) => 
+//	browser && localStorage.setItem('cartCreatedAt', val)
+//)
 
 export const isCartIdExpired = derived(cartCreatedAt, ($cartCreatedAt) => {
 	if (!$cartCreatedAt) {

@@ -168,16 +168,16 @@
 	let selectedCountry
 
 	if (browser) {
-		try {
-			const cachedCart = JSON.parse(localStorage.getItem('cart'))
+		//try {
+		//	const cachedCart = JSON.parse(localStorage.getItem('cart'))
 
-			if (cachedCart?.length) {
-				cart.set(cachedCart)
-				console.log($cart)
-			}
-		} catch (err) {
-			console.error(err)
-		}
+		//	if (cachedCart?.length) {
+		//		cart.set(cachedCart)
+		//		console.log($cart)
+		//	}
+		//} catch (err) {
+		//	console.error(err)
+		//}
 	}
 
 
