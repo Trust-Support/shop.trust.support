@@ -120,7 +120,7 @@
 
 	.footer {
 		border-top: 1px solid var(--bordercolor);
-		border-left: 1px solid #fff;
+		/*border-left: 1px solid #fff;*/
 		text-align: center;
 		padding: var(--space-section);
 		background: var(--bgcolor);
