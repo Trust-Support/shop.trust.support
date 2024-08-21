@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Store</title>
+	<title>Trust shop</title>
 	<!--<style>{style}</style>-->
 </svelte:head>
 
