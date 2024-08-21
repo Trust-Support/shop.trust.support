@@ -9,7 +9,7 @@
 </script>
 
 <div class="success">
-	<p>{`Order received`}</p>
+	<p>{`Order received!`}</p>
 	<p>{`Thank you <3`}</p>
 </div>
 
