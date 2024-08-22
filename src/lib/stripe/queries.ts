@@ -55,7 +55,7 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 					//item.product.slidingScalePricing ?
 					//Math.max(item.price, item.product.minPrice) :
 					//item.product.price,
-				tax_behavior: 'exclusive',
+				tax_behavior: 'inclusive',
 				product_data: {
 					name: `${item.product.name}	${item.variant.name}`,
 					metadata: {
@@ -90,7 +90,7 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			enabled: true,
 		},
 		automatic_tax: {
-			enabled: true
+			enabled: false
 		},
 		phone_number_collection: { enabled: true }
 	}
