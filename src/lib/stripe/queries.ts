@@ -58,7 +58,11 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 				tax_behavior: 'exclusive',
 				product_data: {
 					name: `${item.product.name}	${item.variant.name}`,
-				},
+					metadata: {
+						product_id: item.product.id,
+						variant_id: item.variant.sku,
+					}
+				}
 			},
 			quantity: item.count,
 	}))
@@ -88,7 +92,7 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 		automatic_tax: {
 			enabled: true
 		},
-		phone_number_collection: { enabled: true },
+		phone_number_collection: { enabled: true }
 	}
 }
 

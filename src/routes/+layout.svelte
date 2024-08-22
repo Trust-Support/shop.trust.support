@@ -1,6 +1,8 @@
 <script lang="ts">
 	import '../app.css';
 	import { primaryColor } from '../store'
+	import { Transaction } from '@sanity/client'
+	import { createOrderTransaction } from  '$lib/sanity/transactions'
 
 	const style = `:root { --bgcolor: ${$primaryColor ? $primaryColor : `var(--trustblau)` }; }`
 </script>
