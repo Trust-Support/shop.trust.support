@@ -33,13 +33,13 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			'North Africa': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
 		} :
 		{
-			'DE': '1Pq18sEsJX1Xg1qaJ8k7hbYk',
-			'EU': '1Pq19FEsJX1Xg1qaI1rdbEi4',
-			'UK': '1Pq19bEsJX1Xg1qaCDqlRJoN',
-			'Americas': '1Pq19xEsJX1Xg1qayS7t3VOj',
-			'Asia': '1Pq1APEsJX1Xg1qakOdv2lc2',
-			'Serbia': '1PqN60EsJX1Xg1qaQ6d8nsPx',
-			'North Africa': '1PqN5REsJX1Xg1qaVy3VJZO1',
+			'DE': 'shr_1Pq18sEsJX1Xg1qaJ8k7hbYk',
+			'EU': 'shr_1Pq19FEsJX1Xg1qaI1rdbEi4',
+			'UK': 'shr_1Pq19bEsJX1Xg1qaCDqlRJoN',
+			'Americas': 'shr_1Pq19xEsJX1Xg1qayS7t3VOj',
+			'Asia': 'shr_1Pq1APEsJX1Xg1qakOdv2lc2',
+			'Serbia': 'shr_1PqN60EsJX1Xg1qaQ6d8nsPx',
+			'North Africa': 'shr_1PqN5REsJX1Xg1qaVy3VJZO1',
 		}
 
 	console.log(rate)

@@ -28,7 +28,7 @@ export async function POST ({ request }) {
   }
 
   if (event.type == 'checkout.session.completed') {
-		//const checkoutSessionCompleted = event.data.object
+		const checkoutSessionCompleted = event.data.object
 		//const sessionLineItems = await stripeClient
 		//	.checkout
 		//	.sessions
