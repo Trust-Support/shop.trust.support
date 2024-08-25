@@ -23,9 +23,9 @@ export const pricesQuery = (productIDs: string[]) => {
 export const sessionQuery = (cartItems: any[], rate: any) => {
 	const shippingRates = {
 			'DE': 'shr_1Pq18sEsJX1Xg1qaJ8k7hbYk',
-			'EU': 'shr_1Pq19FEsJX1Xg1qaI1rdbEi4',
+			'EU': 'shr_1PrqIyEsJX1Xg1qaR5Pe1m6v',
 			'UK': 'shr_1Pq19bEsJX1Xg1qaCDqlRJoN',
-			'Americas': 'shr_1Pq19xEsJX1Xg1qayS7t3VOj',
+			'Americas': 'shr_1PrqI1EsJX1Xg1qagnVuPCC7',
 			'Asia': 'shr_1Pq1APEsJX1Xg1qakOdv2lc2',
 			'Serbia': 'shr_1PqN60EsJX1Xg1qaQ6d8nsPx',
 			'North Africa': 'shr_1PqN5REsJX1Xg1qaVy3VJZO1',
