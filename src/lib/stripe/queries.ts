@@ -21,18 +21,7 @@ export const pricesQuery = (productIDs: string[]) => {
 }
 
 export const sessionQuery = (cartItems: any[], rate: any) => {
-	const shippingRates =
-		dev ?
-		{
-			'DE': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-			'EU': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-			'UK': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-			'Americas': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-			'Asia': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-			'Serbia': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-			'North Africa': 'shr_1PpH3UEsJX1Xg1qaH2OLxbko',
-		} :
-		{
+	const shippingRates = {
 			'DE': 'shr_1Pq18sEsJX1Xg1qaJ8k7hbYk',
 			'EU': 'shr_1Pq19FEsJX1Xg1qaI1rdbEi4',
 			'UK': 'shr_1Pq19bEsJX1Xg1qaCDqlRJoN',
@@ -42,34 +31,42 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			'North Africa': 'shr_1PqN5REsJX1Xg1qaVy3VJZO1',
 		}
 
-	console.log(rate)
-	
 	const shippingRate = shippingRates[rate.shipping]
 
 	const lineItems = cartItems
-		.map((item) => ({
-			price_data: {
-				currency: 'EUR',
-				// :D
-				unit_amount: Math.max(item.price, 3500),
-					//item.product.slidingScalePricing ?
-					//Math.max(item.price, item.product.minPrice) :
-					//item.product.price,
-				tax_behavior: 'inclusive',
-				product_data: {
-					name: `${item.product.name}	${item.variant.name}`,
-					metadata: {
-						product_id: item.product.id,
-						variant_id: item.variant.sku,
+		.map((item) => {
+			const unitAmount = (rate.shipping == 'EU') ?
+				Math.max(item.price / 1.19, 3500 / 1.19).toFixed(0) :
+				Math.max(item.price, 3500)
+						
+			const taxRates = (rate.shipping == 'EU') ?
+			// 19%
+					['txr_1Flc6QEsJX1Xg1qaCAyEcp6X'] :
+			// 0%
+					['txr_1PrnjnEsJX1Xg1qaVYBHCpJ0']
+	
+			return {
+				price_data: {
+					currency: 'EUR',
+					unit_amount: unitAmount,
+					tax_behavior: 'exclusive',
+					product_data: {
+						name: `${item.product.name}	${item.variant.name}`,
+						metadata: {
+							product_id: item.product.id,
+							variant_id: item.variant.sku,
+						}
 					}
-				}
-			},
+				},
+				tax_rates: taxRates,
 			quantity: item.count,
-	}))
+		}
+	})
 
 	return {
 		line_items: [...lineItems],
 		mode: 'payment',
+		payment_method_types: ['card'],
 		success_url: dev ?
 			'http://localhost:5173/success' :
 			'https://shop.trust.support/success',
@@ -86,13 +83,12 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 				shipping_rate: shippingRate,
 			},
 		],
+		//automatic_tax: {
+		//	enabled: false
+		//},
 		phone_number_collection: {
-			enabled: true,
-		},
-		automatic_tax: {
-			enabled: false
-		},
-		phone_number_collection: { enabled: true }
+			enabled: true
+		}
 	}
 }
 
