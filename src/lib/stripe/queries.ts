@@ -33,13 +33,17 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 
 	const shippingRate = shippingRates[rate.shipping]
 
+	const collectVat = rate.shipping == 'EU' ||
+		rate.shipping == 'DE' ||
+		rate.shipping == 'Serbia'
+
 	const lineItems = cartItems
 		.map((item) => {
-			const unitAmount = (rate.shipping == 'EU') ?
+			const unitAmount = collectVat ?
 				Math.max(item.price / 1.19, 3500 / 1.19).toFixed(0) :
 				Math.max(item.price, 3500)
 						
-			const taxRates = (rate.shipping == 'EU') ?
+			const taxRates = collectVat ?
 			// 19%
 					['txr_1Flc6QEsJX1Xg1qaCAyEcp6X'] :
 			// 0%
