@@ -8,6 +8,9 @@
 	import { getCheckoutURL } from '$lib/helpers/cart'
 
 	const countries = [
+		{ 'name': 'Australia', 'code': 'AU', 'shipping': 'Australia' },
+		{ 'name': 'Ukraine', 'code': 'UA', 'shipping': 'EU' },
+
 		{ 'name': 'Germany', 'code': 'DE', 'shipping': 'DE' },
 
 		{ 'name': 'Åland Islands', 'code': 'AX', 'shipping': 'EU' },

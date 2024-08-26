@@ -29,13 +29,15 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			'Asia': 'shr_1Pq1APEsJX1Xg1qakOdv2lc2',
 			'Serbia': 'shr_1PqN60EsJX1Xg1qaQ6d8nsPx',
 			'North Africa': 'shr_1PqN5REsJX1Xg1qaVy3VJZO1',
+			'Australia': 'shr_1Ps4CuEsJX1Xg1qa36uXvIL6',
 		}
 
 	const shippingRate = shippingRates[rate.shipping]
 
 	const collectVat = rate.shipping == 'EU' ||
 		rate.shipping == 'DE' ||
-		rate.shipping == 'Serbia'
+		rate.shipping == 'Serbia' ||
+		rate.shipping == 'Australia'
 
 	const lineItems = cartItems
 		.map((item) => {
