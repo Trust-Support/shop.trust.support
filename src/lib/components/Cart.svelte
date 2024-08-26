@@ -135,7 +135,7 @@
 		{ 'name': 'Solomon Islands', 'code': 'SB', 'shipping': 'Asia' },
 		{ 'name': 'Sri Lanka', 'code': 'LK', 'shipping': 'Asia' },
 		{ 'name': 'Syria', 'code': 'SY', 'shipping': 'Asia' },
-		{ 'name': 'Taiwan, Province of China', 'code': 'TW', 'shipping': 'Asia' },
+		{ 'name': 'Taiwan', 'code': 'TW', 'shipping': 'Asia' },
 		{ 'name': 'Tajikistan', 'code': 'TJ', 'shipping': 'Asia' },
 		{ 'name': 'Thailand', 'code': 'TH', 'shipping': 'Asia' },
 		{ 'name': 'Timor-Leste', 'code': 'TL', 'shipping': 'Asia' },
