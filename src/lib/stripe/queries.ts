@@ -84,10 +84,18 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 				rate.code,
 			],
 		},
-		shipping_options: [
+		shipping_options: rate.shipping == 'DE' ? [
 			{
 				shipping_rate: shippingRate,
 			},
+			{
+				shipping_rate: 'shr_1Ps4qXEsJX1Xg1qarvzcqOOy',
+			}
+		] :
+		[
+			{
+				shipping_rate: shippingRate
+			}
 		],
 		//automatic_tax: {
 		//	enabled: false
