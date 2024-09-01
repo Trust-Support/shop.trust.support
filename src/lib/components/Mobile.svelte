@@ -7,6 +7,7 @@
 	import Cart from '$lib/components/Cart.svelte'
 	import { cart, products, selectedProductId, selectedProduct, selectedVariantId } from '../../store'
 	import Button from '$lib/components/Button.svelte'
+	import Slideshow from '$lib/components/Slideshow.svelte'
 
 	let cartOpen = false
 </script>
@@ -14,7 +15,9 @@
 {#if !cartOpen}
 	{#each $products as product}
 		<Row>
-			<Product id={product._id} images={[product.images[0]]} />
+			<Product id={product._id}/>
+				<Slideshow images={product.images} />
+			<Product/>
 		</Row>
 
 		<div class="pane-b">

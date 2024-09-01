@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { intersect } from 'svelte-intersection-observer-action'
-	import Image from '$lib/components/Image.svelte'
 	import { selectedProduct, selectedProductId, selectedVariantId  } from '../../store'
 
 	export let id: string;
-	export let images: string[];
 
 	const intersectCallback = (e) => {
 		if (e.intersectionRatio > 0.4) {
@@ -24,9 +22,7 @@
 	class="product"
 	id={id}
 	use:intersect={intersectOptions}>
-	{#each images as image}
-		<Image src={image} />
-	{/each}
+	<slot />
 </div>
 
 <style>

@@ -42,6 +42,11 @@ export async function POST ({ request }) {
 		//)
 
 		//await sanityClient.mutate(orderTransaction)
+		// Dispatched/not dispatched category in UI
+		// Webhook from sanity -> 
+			// Submit past transacions
+			// Order ID, link to Sanity
+			// Discord: inventory total
   } else {
 		console.log(`Unhandled event type ${event.type}`)
 	}

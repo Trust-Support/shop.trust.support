@@ -7,6 +7,7 @@
 	import Form from '$lib/components/Form.svelte'
 	import Cart from '$lib/components/Cart.svelte'
 	import { contentRects, cart, products, selectedProductId, selectedProduct, selectedVariantId } from '../../store'
+	import Image from '$lib/components/Image.svelte'
 	import Button from '$lib/components/Button.svelte'
 
 	$selectedProductId = $products[0]._id
@@ -43,7 +44,11 @@
 
 <div class="pane-l">
 	{#each $products as product}
-		<Product id={product._id} images={product.images} />
+		<Product id={product._id}> 
+			{#each product.images as image}
+				<Image src={image} />
+			{/each}
+		</Product>
 	{/each}
 </div>
 
