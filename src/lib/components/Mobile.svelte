@@ -46,7 +46,9 @@
 	{:else}
 	<div class="cart">
 		<Button
-			on:push={ () => { cartOpen = !cartOpen }}
+			on:push={ () => {
+				cartOpen = !cartOpen
+			}}
 			>
 			Close
 		</Button>

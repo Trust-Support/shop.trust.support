@@ -22,13 +22,19 @@ export async function load () {
 		//.search(stripePricesQuery(productIds))
 
 	// Reconcile Sanity data with Stripe
-	const products = sanityProducts.map((product) => ({
-		...product,
-		price: product.price.toFixed(0) * 100,
-		minPrice: product.minPrice.toFixed(0) * 100,
-		maxPrice: product.maxPrice.toFixed(0) * 100,
-		defaultPrice: product.defaultPrice.toFixed(0) * 100,
-	}))
+	const products = sanityProducts
+		.filter((product) => 
+			product?.price || 
+			product?.slidingScalePricing &&
+			(product?.minPrice && product?.maxPrice && product?.defaultPrice)
+		)
+		.map((product) => ({
+			...product,
+			price: product.price.toFixed(0) * 100,
+			minPrice: product.minPrice.toFixed(0) * 100,
+			maxPrice: product.maxPrice.toFixed(0) * 100,
+			defaultPrice: product.defaultPrice.toFixed(0) * 100,
+		}))
 
 	console.log(products)
 		
