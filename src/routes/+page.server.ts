@@ -12,14 +12,6 @@ import { error } from '@sveltejs/kit'
 export async function load () {
   const config = await sanityClient.fetch(configQuery)
   const sanityProducts = await sanityClient.fetch(sanityProductsQuery)
-	//const productIds = sanityProducts.map((product) =>
-	//	product.variants
-	//		.map((variant) => variant.sku)
-	//)
-	//.flat()
-
-	//const { data: stripePrices } = await stripeClient.prices
-		//.search(stripePricesQuery(productIds))
 
 	// Reconcile Sanity data with Stripe
 	const products = sanityProducts
