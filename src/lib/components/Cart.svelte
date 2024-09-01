@@ -259,6 +259,7 @@
 	style="submit"
 	on:push={checkout}
 	disabled={!selectedCountry}
+	data-umami-event="Checkout button"
 	>
 	{#if !selectedCountry}
 		Please select shipping country
