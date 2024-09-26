@@ -101,6 +101,9 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			},
 			{
 				shipping_rate: 'shr_1Ps4qXEsJX1Xg1qarvzcqOOy',
+			},
+			{
+				shipping_rate: 'shr_1Q3Ib3EsJX1Xg1qafYWPGpJf',
 			}
 		] :
 		[
