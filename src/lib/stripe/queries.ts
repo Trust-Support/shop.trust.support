@@ -32,7 +32,18 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			'Australia': 'shr_1Ps4CuEsJX1Xg1qa36uXvIL6',
 		}
 
+	const shippingRatesUntracked = {
+			'DE': 'shr_1Q3IO4EsJX1Xg1qaGHyHqPOc',
+			'EU': 'shr_1Q3IOeEsJX1Xg1qaq0Q7E9IJ',
+			'UK': 'shr_1Q3IPIEsJX1Xg1qagtRULgYE',
+			'Americas': 'shr_1Q3IQ4EsJX1Xg1qajsnHSi8N',
+			'Asia': 'shr_1Q3IQ4EsJX1Xg1qajsnHSi8N',
+			'Serbia': 'shr_1Q3IQzEsJX1Xg1qalLK3sGBe',
+			'North Africa': 'shr_1Q3IRQEsJX1Xg1qacW9zkTUA',
+		}
+
 	const shippingRate = shippingRates[rate.shipping]
+	const shippingRateUntracked = shippingRatesUntracked[rate.shipping]
 
 	const collectVat = rate.shipping == 'EU' ||
 		rate.shipping == 'DE' ||
@@ -95,11 +106,11 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 		[
 			{
 				shipping_rate: shippingRate
+			},
+			{
+				shipping_rate: shippingRateUntracked
 			}
 		],
-		//automatic_tax: {
-		//	enabled: false
-		//},
 		phone_number_collection: {
 			enabled: true
 		}

@@ -159,13 +159,14 @@
 	]
 
 	const shippingRates = {
-		'DE': 549,
-		'EU': 1449,
-		'UK': 2699,
-		'Americas': 4799,
-		'Asia': 4599,
-		'Serbia': 2999,
-		'North Africa': 3799,
+		'DE': 399,
+		'EU': 649,
+		'UK': 899,
+		'Americas': 1199,
+		'Asia': 1199,
+		'Serbia': 1199,
+		'North Africa': 1199,
+		'Australia': 4999,
 	}
 
 	let selectedCountry
@@ -247,7 +248,7 @@
 					<td>
 						<b>{formatPrice($cartTotal)} EUR</b>
 						{#if $shippingRate !== undefined}
-							<span class="note">+ {formatPrice($shippingRate.rate)} EUR shipping (tracked)</span>
+							<span class="note">+ {formatPrice($shippingRate.rate)} EUR shipping</span>
 						{/if}
 					</td>
 				</tr>
