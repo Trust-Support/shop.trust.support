@@ -28,18 +28,18 @@ export const sessionQuery = (cartItems: any[], rate: any) => {
 			'Americas': 'shr_1PrqI1EsJX1Xg1qagnVuPCC7',
 			'Asia': 'shr_1Pq1APEsJX1Xg1qakOdv2lc2',
 			'Serbia': 'shr_1PqN60EsJX1Xg1qaQ6d8nsPx',
-			'North Africa': 'shr_1PqN5REsJX1Xg1qaVy3VJZO1',
+			'North Africa': 'shr_1Q3IadEsJX1Xg1qaoEMkWGiL',
 			'Australia': 'shr_1Ps4CuEsJX1Xg1qa36uXvIL6',
 		}
 
 	const shippingRatesUntracked = {
-			'DE': 'shr_1Q3IO4EsJX1Xg1qaGHyHqPOc',
-			'EU': 'shr_1Q3IOeEsJX1Xg1qaq0Q7E9IJ',
+			'DE': 'shr_1Q3Ib3EsJX1Xg1qafYWPGpJf',
+			'EU': 'shr_1Q3IbeEsJX1Xg1qaRMulSkEy',
 			'UK': 'shr_1Q3IPIEsJX1Xg1qagtRULgYE',
-			'Americas': 'shr_1Q3IQ4EsJX1Xg1qajsnHSi8N',
+			'Americas': 'shr_1Q3IPoEsJX1Xg1qakdiTukg5',
 			'Asia': 'shr_1Q3IQ4EsJX1Xg1qajsnHSi8N',
 			'Serbia': 'shr_1Q3IQzEsJX1Xg1qalLK3sGBe',
-			'North Africa': 'shr_1Q3IRQEsJX1Xg1qacW9zkTUA',
+			'North Africa': 'shr_1Q3IiVEsJX1Xg1qa04YF37iP',
 		}
 
 	const shippingRate = shippingRates[rate.shipping]
